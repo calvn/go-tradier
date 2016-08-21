@@ -6,14 +6,14 @@ import (
 	"log"
 	"os"
 
-	"github.com/cleung2010/go-tradier/tradier"
+	"github.com/calvn/go-tradier/tradier"
 	"github.com/joho/godotenv"
 	"golang.org/x/oauth2"
 )
 
 func main() {
 	// Load access token from .env
-	err := godotenv.Load()
+	err := godotenv.Load("examples/user_orders/.env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}

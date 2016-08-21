@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	libraryVersion = "1"
+	libraryVersion = "0.0.1"
 	defaultBaseURL = "https://api.tradier.com/v1/"
 	userAgent      = "go-tradier/" + libraryVersion
 )

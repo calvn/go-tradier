@@ -3,7 +3,10 @@
 ## General
 - [ ] Rate limiting tracking on the client
 - [ ] Determine best type (probably not float64) for holding currency
-- [ ] Handle errors gracefully (e.g. "Invalid access token")
+- [ ] Handle errors gracefully
+  - [ ] `json: Invalid access token`
+  - [ ] `json: cannot unmarshal number 0E-8 into Go value of type int` on `LastFillQuantity` and such
+  - [ ] Better error handling on `MarshalJSON` and `UnmarshalJSON`
 
 ## User
 |                | endpoint | test coverage |

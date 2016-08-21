@@ -2,6 +2,7 @@ package tradier
 
 import (
 	"encoding/json"
+	"log"
 	"time"
 )
 
@@ -16,17 +17,18 @@ type Order struct {
 	Class             *string    `json:"class,omitempty"`
 	CreateDate        *time.Time `json:"create_date,omitempty"`
 	Duration          *string    `json:"duration,omitempty"`
-	ExecQuantity      *int       `json:"exec_quantity,omitempty"`
+	ExecQuantity      *float64   `json:"exec_quantity,omitempty"`
 	ID                *int       `json:"id,omitempty"`
 	LastFillPrice     *float64   `json:"last_fill_price,omitempty"`
-	LastFillQuantity  *int       `json:"last_fill_quantity,omitempty"`
+	LastFillQuantity  *float64   `json:"last_fill_quantity,omitempty"`
 	Quantity          *float64   `json:"quantity,omitempty"`
-	RemainingQuantity *int       `json:"remaining_quantity,omitempty"`
+	RemainingQuantity *float64   `json:"remaining_quantity,omitempty"`
 	Side              *string    `json:"side,omitempty"`
 	Status            *string    `json:"status,omitempty"`
 	Symbol            *string    `json:"symbol,omitempty"`
 	TransactionDate   *time.Time `json:"transaction_date,omitempty"`
 	Type              *string    `json:"type,omitempty"`
+	orderArray        []order    // Used internally to store array of `order` object
 }
 
 type order Order
@@ -51,44 +53,41 @@ func (o *Orders) UnmarshalJSON(b []byte) (err error) {
 }
 
 func (o *Orders) MarshalJSON() ([]byte, error) {
-	if o.Order != nil && *o.Order.Type == "null" {
+	if o.Order != nil && o.Order.orderArray == nil && *o.Order.Type == "null" {
 		return json.Marshal(o.Order.Type)
 	}
 
 	return json.Marshal(Orders(*o))
 }
 
-// func (o *Order) UnmarshalJSON(b []byte) (err error) {
-// 	orderStr := ""
-// 	// var orderObj *order
-// 	orderArr := []interface{}{
-// 		&o.AvgFillPrice,
-// 		&o.Class,
-// 		&o.CreateDate,
-// 		&o.Duration,
-// 		&o.ExecQuantity,
-// 		&o.ID,
-// 		&o.LastFillPrice,
-// 		&o.LastFillQuantity,
-// 		&o.Quantity,
-// 		&o.RemainingQuantity,
-// 		&o.Side,
-// 		&o.Status,
-// 		&o.Symbol,
-// 		&o.TransactionDate,
-// 		&o.Type,
-// 	}
-//
-// 	// If order is a string
-// 	if err = json.Unmarshal(b, &orderStr); err == nil {
-// 		o.Type = &orderStr
-// 		return
-// 	}
-//
-// 	// If order is an array
-// 	if err = json.Unmarshal(b, orderArr); err == nil {
-// 		return nil
-// 	}
-//
-// 	return nil
-// }
+func (o *Order) UnmarshalJSON(b []byte) (err error) {
+	orderObj := order{}
+	orderArr := []order{}
+
+	// log.Println(string(b))
+
+	// If order is an object
+	if err = json.Unmarshal(b, &orderObj); err == nil {
+		*o = Order(orderObj)
+		return
+	}
+
+	// If order is an array
+	if err = json.Unmarshal(b, &orderArr); err == nil {
+		o.orderArray = orderArr
+		return nil
+	} else {
+		log.Println(err)
+	}
+
+	return nil
+}
+
+func (o *Order) MarshalJSON() ([]byte, error) {
+
+	if o.orderArray != nil {
+		return json.Marshal(o.orderArray)
+	}
+
+	return json.Marshal(Order(*o))
+}
