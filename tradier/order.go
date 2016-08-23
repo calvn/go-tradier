@@ -6,12 +6,14 @@ import (
 	"time"
 )
 
-// `orders` can be an object or string literal "null"
+// `orders` JSON can be an object or string literal "null"
 type Orders struct {
 	Order *Order `json:"order,omitempty"`
 }
 
-// `order` can be an object or array of objects
+type orders Orders
+
+// `order` JSON can be an object or array of objects
 type Order struct {
 	AvgFillPrice      *float64   `json:"avg_fill_price,omitempty"`
 	Class             *string    `json:"class,omitempty"`
@@ -28,12 +30,11 @@ type Order struct {
 	Symbol            *string    `json:"symbol,omitempty"`
 	TransactionDate   *time.Time `json:"transaction_date,omitempty"`
 	Type              *string    `json:"type,omitempty"`
-	orderArray        []order    // Used internally to store array of `order` object
+	orderArray        `json:"-"` // Used internally to store array of `order` object as slice
 }
 
 type order Order
-
-type orders Orders
+type orderArray []order
 
 func (o *Orders) UnmarshalJSON(b []byte) (err error) {
 	ordersStr := ""
@@ -64,8 +65,6 @@ func (o *Order) UnmarshalJSON(b []byte) (err error) {
 	orderObj := order{}
 	orderArr := []order{}
 
-	// log.Println(string(b))
-
 	// If order is an object
 	if err = json.Unmarshal(b, &orderObj); err == nil {
 		*o = Order(orderObj)
@@ -77,7 +76,7 @@ func (o *Order) UnmarshalJSON(b []byte) (err error) {
 		o.orderArray = orderArr
 		return nil
 	} else {
-		log.Println(err)
+		log.Println(err) // FIXME: Better error handling
 	}
 
 	return nil

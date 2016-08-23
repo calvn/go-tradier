@@ -1,6 +1,7 @@
 # TODO
 
 ## General
+
 - [ ] Rate limiting tracking on the client
 - [ ] Determine best type (probably not float64) for holding currency
 - [ ] Handle errors gracefully
@@ -9,17 +10,30 @@
   - [ ] Better error handling on `MarshalJSON` and `UnmarshalJSON`
 
 ## User
+
 |                | endpoint | test coverage |
 |----------------|----------|---------------|
-| user/profile   |          |               |
-| user/balances  |          |               |
-| user/positions |          |               |
-| user/history   |          |               |
-| user/gainloss  |          |               |
-| user/orders    |          |               |
+| user/profile   | ✓        |               |
+| user/balances  | ✓        |               |
+| user/positions | ✓        |               |
+| user/history   | ✓        |               |
+| user/gainloss  | ✓        |               |
+| user/orders    | ✓        |               |
+
+- [ ] Fix `OrdersAccountEntry` to dynamically map to object
+- [ ] `Order` should support indexing if it is a slice
 
 
 ## Account
+
+|                   | endpoint | test coverage |
+|-------------------|----------|---------------|
+| account/balances  |          |               |
+| account/positions |          |               |
+| account/history   |          |               |
+| account/gainloss  |          |               |
+| account/orders    |          |               |
+| account/status    |          |               |
 
 ## Trading
 
