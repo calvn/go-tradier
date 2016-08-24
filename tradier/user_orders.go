@@ -3,16 +3,7 @@ package tradier
 // FIXME: This needs to handle case where there is only 1 account entry
 //        In that case, account is an object and not an array
 type UserOrders struct {
-	Accounts *struct {
-		AccountEntries []OrdersAccountEntry `json:"account,omitempty"`
-	} `json:"accounts,omitempty"`
-}
-
-// `orders` can be an object or string literal "null"
-// `order` can be an object or array of objects
-type OrdersAccountEntry struct {
-	AccountNumber *string `json:"account_number,omitempty"`
-	Orders        *Orders `json:"orders,omitempty"`
+	Accounts *Accounts `json:"accounts,omitempty"`
 }
 
 func (s *UserService) Orders() (*UserOrders, *Response, error) {
