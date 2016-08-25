@@ -2,13 +2,13 @@ package tradier
 
 import (
 	"encoding/json"
-	"log"
 	"time"
 )
 
 // `orders` JSON can be an object or string literal "null"
 type Orders struct {
-	Order *Order `json:"order,omitempty"`
+	Order  []Order `json:"order,omitempty"`
+	isNull *string
 }
 
 type orders Orders
@@ -30,63 +30,86 @@ type Order struct {
 	Symbol            *string    `json:"symbol,omitempty"`
 	TransactionDate   *time.Time `json:"transaction_date,omitempty"`
 	Type              *string    `json:"type,omitempty"`
-	orderArray        `json:"-"` // Used internally to store array of `order` object as slice
+	// orderArray        `json:"-"` // Used internally to store array of `order` object as slice
 }
 
-type order Order
+type order struct {
+	*Order `json:"order,omitempty"`
+}
+
 type orderArray []order
 
 func (o *Orders) UnmarshalJSON(b []byte) (err error) {
 	ordersStr := ""
 	ordersObj := orders{}
+	orderObj := order{}
 
+	// If order is a string, i.e. "null"
+	if err = json.Unmarshal(b, &ordersStr); err == nil {
+		o.isNull = &ordersStr
+		return nil
+	}
+
+	// If order is an array
 	if err = json.Unmarshal(b, &ordersObj); err == nil {
 		*o = Orders(ordersObj)
-		return
+		return nil
 	}
-	if err = json.Unmarshal(b, &ordersStr); err == nil {
-		o.Order = &Order{}
-		o.Order.Type = &ordersStr
-		return
+
+	// If order is an object
+	if err = json.Unmarshal(b, &orderObj); err == nil {
+		tmp := []Order{*orderObj.Order}
+		*o = Orders{Order: tmp}
+		return nil
 	}
 
 	return nil
 }
 
 func (o *Orders) MarshalJSON() ([]byte, error) {
-	if o.Order != nil && o.Order.orderArray == nil && *o.Order.Type == "null" {
-		return json.Marshal(o.Order.Type)
+	// If order is null
+	if o.isNull != nil {
+		return json.Marshal(o.isNull)
 	}
 
-	return json.Marshal(Orders(*o))
+	// If order array is size 1, return object directly
+	if len(o.Order) == 1 {
+		return json.Marshal(map[string]interface{}{
+			"order": o.Order[0],
+		})
+	}
+
+	return json.Marshal(*o)
 }
 
-func (o *Order) UnmarshalJSON(b []byte) (err error) {
-	orderObj := order{}
-	orderArr := []order{}
+// func (o *Order) UnmarshalJSON(b []byte) (err error) {
+// 	orderObj := order{}
+//
+// 	log.Println(string(b))
+//
+// 	// If order is an object
+// 	if err = json.Unmarshal(b, &orderObj); err == nil {
+// 		log.Println("here")
+// 		*o = Order(orderObj)
+// 		return nil
+// 	}
+// 	//
+// 	// // If order is an array
+// 	// if err = json.Unmarshal(b, &orderArr); err == nil {
+// 	// 	o.orderArray = orderArr
+// 	// 	return nil
+// 	// } else {
+// 	// 	log.Println(err) // FIXME: Better error handling
+// 	// }
+//
+// 	return nil
+// }
 
-	// If order is an object
-	if err = json.Unmarshal(b, &orderObj); err == nil {
-		*o = Order(orderObj)
-		return
-	}
-
-	// If order is an array
-	if err = json.Unmarshal(b, &orderArr); err == nil {
-		o.orderArray = orderArr
-		return nil
-	} else {
-		log.Println(err) // FIXME: Better error handling
-	}
-
-	return nil
-}
-
-func (o *Order) MarshalJSON() ([]byte, error) {
-
-	if o.orderArray != nil {
-		return json.Marshal(o.orderArray)
-	}
-
-	return json.Marshal(Order(*o))
-}
+// func (o *Order) MarshalJSON() ([]byte, error) {
+//
+// 	if o.orderArray != nil {
+// 		return json.Marshal(o.orderArray)
+// 	}
+//
+// 	return json.Marshal(Order(*o))
+// }
