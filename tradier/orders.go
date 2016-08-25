@@ -67,18 +67,18 @@ func (o *Orders) UnmarshalJSON(b []byte) (err error) {
 }
 
 func (o *Orders) MarshalJSON() ([]byte, error) {
-	// If order is null
+	// If Order is null
 	if len(o.Order) == 0 {
 		return json.Marshal("null")
 	}
 
-	// If order array is size 1, return object directly
+	// If Order slice is size 1, return object directly
 	if len(o.Order) == 1 {
 		return json.Marshal(map[string]interface{}{
 			"order": o.Order[0],
 		})
 	}
 
-	// Otherwise mashal as Orders normally, in this case using []Order
+	// Otherwise mashal Orders normally, in this case using []Order
 	return json.Marshal(*o)
 }
