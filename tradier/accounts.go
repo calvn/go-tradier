@@ -3,6 +3,7 @@ package tradier
 import (
 	"encoding/json"
 	"log"
+	"time"
 )
 
 type Accounts struct {
@@ -13,7 +14,30 @@ type accounts Accounts
 
 type Account struct {
 	AccountNumber *string `json:"account_number,omitempty"`
-	Orders        *Orders `json:"orders,omitempty"`
+
+	// Specific to orders
+	Orders *Orders `json:"orders,omitempty"`
+
+	// Specific to profile
+	Classification *string    `json:"classification,omitempty"`
+	DateCreated    *time.Time `json:"date_created,omitempty"`
+	DayTrader      *bool      `json:"day_trader,omitempty"`
+	OptionLevel    *int       `json:"option_level,omitempty"`
+	Status         *string    `json:"status,omitempty"`
+	Type           *string    `json:"type,omitempty"`
+	LastUpateDate  *time.Time `json:"last_update_date,omitempty"`
+
+	// Specific to positions
+	Positions *Positions `json:"positions,omitempty"`
+
+	// Specific to gainloss
+	GainLoss *GainLoss `json:"gainloss,omitempty"`
+
+	// Specific to history
+	History *History `json:"history,omitempty"`
+
+	// Specific to balances
+	Balances *Balances `json:"balances,omitempty"`
 }
 
 type account struct {
