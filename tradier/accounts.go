@@ -2,7 +2,6 @@ package tradier
 
 import (
 	"encoding/json"
-	"log"
 	"time"
 )
 
@@ -62,10 +61,8 @@ func (a *Accounts) UnmarshalJSON(b []byte) (err error) {
 
 	// If account is an object
 	if err = json.Unmarshal(b, &accountObj); err == nil {
-		log.Println(string(b))
-		tmp := []Account{*accountObj.Account}
 		*a = Accounts{
-			Account: tmp,
+			Account: []Account{*accountObj.Account},
 		}
 		return nil
 	}

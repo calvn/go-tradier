@@ -58,8 +58,7 @@ func (o *Orders) UnmarshalJSON(b []byte) (err error) {
 
 	// If order is an object
 	if err = json.Unmarshal(b, &orderObj); err == nil {
-		tmp := []Order{*orderObj.Order}
-		*o = Orders{Order: tmp}
+		*o = Orders{Order: []Order{*orderObj.Order}}
 		return nil
 	}
 
