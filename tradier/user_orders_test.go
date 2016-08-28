@@ -11,7 +11,7 @@ func TestActivityService_List(t *testing.T) {
 	setup()
 	defer teardown()
 
-	mux.HandleFunc("/feeds", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/user/orders", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 
 		w.WriteHeader(http.StatusOK)
@@ -22,8 +22,9 @@ func TestActivityService_List(t *testing.T) {
 	if err != nil {
 		t.Errorf("User.Orders returned error: %v", err)
 	}
+
 	if want := wantUserOrders; !reflect.DeepEqual(got, want) {
-		t.Errorf("User.Orders = %+v, want %+v", got, want.Accounts.Account)
+		t.Errorf("User.Orders = %+v, want %+v", got, want)
 	}
 }
 
@@ -53,48 +54,6 @@ var userOrdersJSON = []byte(`{
         }
       },
       {
-        "account_number": "6YA00005",
-        "orders": {
-          "order": [
-            {
-              "id": 182043,
-              "type": "market",
-              "symbol": "GOOGL",
-              "side": "buy_to_open",
-              "quantity": 1,
-              "status": "pending",
-              "duration": "gtc",
-              "avg_fill_price": 0,
-              "exec_quantity": 0,
-              "last_fill_price": 0,
-              "last_fill_quantity": 0,
-              "remaining_quantity": 1,
-              "create_date": "2016-08-23T05:18:19.256Z",
-              "transaction_date": "2016-08-23T12:15:07.784Z",
-              "class": "option",
-              "option_symbol": "GOOGL160826C00815000"
-            }, {
-              "id": 182381,
-              "type": "market",
-              "symbol": "AAPL",
-              "side": "buy_to_open",
-              "quantity": 1,
-              "status": "pending",
-              "duration": "gtc",
-              "avg_fill_price": 0,
-              "exec_quantity": 0,
-              "last_fill_price": 0,
-              "last_fill_quantity": 0,
-              "remaining_quantity": 1,
-              "create_date": "2016-08-23T19:06:38.430Z",
-              "transaction_date": "2016-08-23T19:06:38.446Z",
-              "class": "option",
-              "option_symbol": "AAPL160826C00099500"
-            }
-          ]
-        }
-      },
-      {
         "account_number": "6YA05708",
         "orders": "null"
       }
@@ -103,8 +62,8 @@ var userOrdersJSON = []byte(`{
 }`)
 
 var (
-	createdDate    = time.Date(2016, 8, 23, 05, 17, 37, 617, time.UTC)
-	transitionDate = time.Date(2016, 8, 25, 12, 15, 07, 268, time.UTC)
+	createdDate    = time.Date(2016, 8, 23, 05, 17, 37, 617000000, time.UTC)
+	transitionDate = time.Date(2016, 8, 23, 12, 15, 07, 268000000, time.UTC)
 )
 
 var wantUserOrders = &User{
@@ -116,7 +75,7 @@ var wantUserOrders = &User{
 					Order: []Order{
 						{
 							ID:                Int(182042),
-							Type:              String("Market"),
+							Type:              String("market"),
 							Symbol:            String("GOOGL"),
 							Side:              String("buy"),
 							Quantity:          Float64(1),
@@ -133,6 +92,10 @@ var wantUserOrders = &User{
 						},
 					},
 				},
+			},
+			{
+				AccountNumber: String("6YA05708"),
+				Orders:        &Orders{},
 			},
 		},
 	},
