@@ -1,17 +1,17 @@
 package tradier
 
-func (s *UserService) Balances() (*Balances, *Response, error) {
+func (s *UserService) Balances() (*User, *Response, error) {
 	req, err := s.client.NewRequest("GET", "user/balances", nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	b := &Balances{}
+	u := &User{}
 
-	resp, err := s.client.Do(req, b)
+	resp, err := s.client.Do(req, u)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return b, resp, nil
+	return u, resp, nil
 }

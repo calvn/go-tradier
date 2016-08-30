@@ -1,17 +1,17 @@
 package tradier
 
-func (s *UserService) History() (*History, *Response, error) {
+func (s *UserService) History() (*User, *Response, error) {
 	req, err := s.client.NewRequest("GET", "user/history", nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	h := &History{}
+	u := &User{}
 
-	resp, err := s.client.Do(req, h)
+	resp, err := s.client.Do(req, u)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return h, resp, nil
+	return u, resp, nil
 }

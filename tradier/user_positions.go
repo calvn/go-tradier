@@ -6,12 +6,12 @@ func (s *UserService) Positions() (*User, *Response, error) {
 		return nil, nil, err
 	}
 
-	p := &User{}
+	u := &User{}
 
-	resp, err := s.client.Do(req, p)
+	resp, err := s.client.Do(req, u)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return p, resp, nil
+	return u, resp, nil
 }

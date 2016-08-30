@@ -25,18 +25,19 @@
 
 - [x] ~~Fix `OrdersAccountEntry` to dynamically map to object~~
 - [x] `Order` should support indexing if it is a slice
+- [ ] Add a generic UserRequest method that gets called by all user-related methods
 
 
 ## Account endpoints
 
-|                   | endpoint | test coverage |
-|-------------------|----------|---------------|
-| account/balances  |          |               |
-| account/positions |          |               |
-| account/history   |          |               |
-| account/gainloss  |          |               |
-| account/orders    |          |               |
-| account/status    |          |               |
+|                       | endpoint | test coverage |
+|-----------------------|----------|---------------|
+| account/balances      | ✓        |               |
+| account/positions     | ✓        |               |
+| account/history       | ✓        |               |
+| account/gainloss      | ✓        |               |
+| account/orders        | ✓        |               |
+| account/orders/status | ✓        |               |
 
 ## Trading endpoints
 
