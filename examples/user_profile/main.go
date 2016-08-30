@@ -27,7 +27,7 @@ func main() {
 
 	client := tradier.NewClient(tc)
 
-	profile, _, err := client.User.Orders()
+	profile, _, err := client.User.Profile()
 	if err != nil {
 		log.Fatalf("Error fetching order: %s", err)
 	}

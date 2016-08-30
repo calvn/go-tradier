@@ -5,8 +5,6 @@ import (
 	"time"
 )
 
-type AccountService service
-
 type Accounts struct {
 	Account []Account `json:"account,omitempty"`
 }

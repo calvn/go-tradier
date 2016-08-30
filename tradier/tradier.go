@@ -27,7 +27,8 @@ type Client struct {
 
 	common service
 
-	User *UserService
+	User    *UserService
+	Account *AccountService
 }
 
 type service struct {
@@ -49,6 +50,7 @@ func NewClient(httpClient *http.Client) *Client {
 
 	c.common.client = c
 	c.User = (*UserService)(&c.common)
+	c.Account = (*AccountService)(&c.common)
 
 	return c
 }
