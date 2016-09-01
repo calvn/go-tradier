@@ -3,20 +3,43 @@ package tradier
 import (
 	"fmt"
 	"net/url"
-	"strconv"
+
+	"github.com/google/go-querystring/query"
 )
 
-func (s *OrderService) Create(accountId, class, symbol, duration, side string, quantity int, orderType string, price, stop float64, optionSymbol string) (*Order, *Response, error) {
+// NOTE: Refer to https://godoc.org/github.com/google/go-querystring/query for building the struct mapping
+type OrderParams struct {
+	Class        string  `url:"class"`
+	Symbol       string  `url:"symbol"`
+	Duration     string  `url:"duration"`
+	Side         string  `url:"side,omitempty"`
+	Quantity     int     `url:"quantity,omitempty"`
+	Type         string  `url:"type"`
+	Price        float64 `url:"price,omitempty"`
+	Stop         float64 `url:"stop,omitempty"`
+	OptionSymbol string  `url:"option_symbol,omitempty"`
+
+	//Specific to multileg orders
+	MultiSide         []string `url:"side,omitempty,[]"`
+	MultiQuantity     []int    `url:"quantity,omitempty,[]"`
+	MultiOptionSymbol []string `url:"option_symbol,omitempty,[]"`
+}
+
+func (s *OrderService) Create(accountId string, params *OrderParams) (*Order, *Response, error) {
 	u := fmt.Sprintf("accounts/%s/orders", accountId)
 
 	// Populate data
-	data := url.Values{}
-	data.Set("class", class)
-	data.Set("symbol", symbol)
-	data.Set("duration", duration)
-	data.Set("side", side)
-	data.Set("quantity", strconv.Itoa(quantity))
-	data.Set("type", orderType)
+	data, err := query.Values(params)
+	if err != nil {
+		return nil, nil, err
+	}
+	// data := url.Values{}
+	// data.Set("class", class)
+	// data.Set("symbol", symbol)
+	// data.Set("duration", duration)
+	// data.Set("side", side)
+	// data.Set("quantity", strconv.Itoa(quantity))
+	// data.Set("type", orderType)
 
 	uri, err := url.Parse(u)
 	if err != nil {

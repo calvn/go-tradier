@@ -27,7 +27,15 @@ func main() {
 
 	client := tradier.NewClient(tc)
 
-	order, _, err := client.Order.Create("6YA05708", "equity", "AAPL", "day", "buy", 1, "market", 0, 0, "")
+	params := &tradier.OrderParams{
+		Class:    "equity",
+		Symbol:   "AAPL",
+		Duration: "day",
+		Side:     "buy",
+		Quantity: 1,
+		Type:     "market",
+	}
+	order, _, err := client.Order.Create("6YA05708", params)
 	if err != nil {
 		log.Fatalf("Error fetching order: %s", err)
 	}
