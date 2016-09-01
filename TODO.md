@@ -41,6 +41,14 @@
 
 ## Trading endpoints
 
+|                       | endpoint | test coverage |
+|-----------------------|----------|---------------|
+| order/create          |          |               |
+| order/create_multileg |          |               |
+| order/preview         |          |               |
+| order/update          |          |               |
+| order/cancel          |          |               |
+
 ## Market Data endpoints
 
 ## Fundamentals endpoints

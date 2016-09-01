@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"sync"
@@ -29,6 +30,7 @@ type Client struct {
 
 	User    *UserService
 	Account *AccountService
+	Order   *OrderService
 }
 
 type service struct {
@@ -51,6 +53,7 @@ func NewClient(httpClient *http.Client) *Client {
 	c.common.client = c
 	c.User = (*UserService)(&c.common)
 	c.Account = (*AccountService)(&c.common)
+	c.Order = (*OrderService)(&c.common)
 
 	return c
 }
@@ -63,13 +66,10 @@ func (c *Client) NewRequest(method, urlStr string, body interface{}) (*http.Requ
 
 	u := c.BaseURL.ResolveReference(rel)
 
+	// If the body is not empty, assume it's a form data
 	var buf io.ReadWriter
 	if body != nil {
-		buf = new(bytes.Buffer)
-		err := json.NewEncoder(buf).Encode(body)
-		if err != nil {
-			return nil, err
-		}
+		buf = bytes.NewBufferString(body.(string))
 	}
 
 	req, err := http.NewRequest(method, u.String(), buf)
@@ -81,7 +81,7 @@ func (c *Client) NewRequest(method, urlStr string, body interface{}) (*http.Requ
 	req.Header.Set("Accept", "application/json")
 
 	if body != nil {
-		req.Header.Set("Content-Type", "application/json")
+		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	}
 
 	if c.UserAgent != "" {
@@ -104,10 +104,35 @@ func newResponse(r *http.Response) *Response {
 func (c *Client) Do(req *http.Request, v interface{}) (*Response, error) {
 	// TODO: Do rate limit checking
 
+	// b, err := ioutil.ReadAll(req.Body)
+	// if err != nil {
+	// 	log.Println(err)
+	// }
+	//
+	// log.Printf("%s", b)
+
 	resp, err := c.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+
+	if resp.StatusCode == 400 {
+		b, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return nil, err
+		}
+		log.Println(string(b))
+		return nil, err
+	}
+
+	// log.Println(req.FormValue("symbol"))
+	//
+	// b, err := ioutil.ReadAll(resp.Body)
+	// if err != nil {
+	// 	log.Println(err)
+	// }
+	//
+	// log.Printf("%s", b)
 
 	defer func() {
 		// Drain up to 512 bytes and close the body to let the Transport reuse the connection
