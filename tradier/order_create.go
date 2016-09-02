@@ -19,13 +19,18 @@ type OrderParams struct {
 	Stop         float64 `url:"stop,omitempty"`
 	OptionSymbol string  `url:"option_symbol,omitempty"`
 
-	//Specific to multileg orders
+	// Specific to multileg orders
 	MultiSide         []string `url:"side,omitempty,[]"`
 	MultiQuantity     []int    `url:"quantity,omitempty,[]"`
 	MultiOptionSymbol []string `url:"option_symbol,omitempty,[]"`
+
+	// Specific to preview
+	Preview bool `url:"preview,omitempty"`
 }
 
-func (s *OrderService) Create(accountId string, params *OrderParams) (*Order, *Response, error) {
+// Create sends an order creation request. This method supports single-sided orders
+// as well as multileg and combo orders.
+func (s *OrderService) Create(accountId string, params *OrderParams) (*Orders, *Response, error) {
 	u := fmt.Sprintf("accounts/%s/orders", accountId)
 
 	// Populate data
@@ -33,13 +38,6 @@ func (s *OrderService) Create(accountId string, params *OrderParams) (*Order, *R
 	if err != nil {
 		return nil, nil, err
 	}
-	// data := url.Values{}
-	// data.Set("class", class)
-	// data.Set("symbol", symbol)
-	// data.Set("duration", duration)
-	// data.Set("side", side)
-	// data.Set("quantity", strconv.Itoa(quantity))
-	// data.Set("type", orderType)
 
 	uri, err := url.Parse(u)
 	if err != nil {
@@ -53,7 +51,7 @@ func (s *OrderService) Create(accountId string, params *OrderParams) (*Order, *R
 		return nil, nil, err
 	}
 
-	o := &Order{}
+	o := &Orders{}
 
 	resp, err := s.client.Do(req, o)
 	if err != nil {
@@ -61,12 +59,4 @@ func (s *OrderService) Create(accountId string, params *OrderParams) (*Order, *R
 	}
 
 	return o, resp, nil
-}
-
-func (s *OrderService) CreateMarket() {
-
-}
-
-func (s *OrderService) CreateLimit() {
-
 }

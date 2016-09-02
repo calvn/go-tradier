@@ -25,13 +25,24 @@ type Order struct {
 	ID                *int       `json:"id,omitempty"`
 	LastFillPrice     *float64   `json:"last_fill_price,omitempty"`
 	LastFillQuantity  *float64   `json:"last_fill_quantity,omitempty"`
-	Quantity          *float64   `json:"quantity,omitempty"`
+	Quantity          *int       `json:"quantity,omitempty"`
 	RemainingQuantity *float64   `json:"remaining_quantity,omitempty"`
 	Side              *string    `json:"side,omitempty"`
 	Status            *string    `json:"status,omitempty"`
 	Symbol            *string    `json:"symbol,omitempty"`
 	TransactionDate   *time.Time `json:"transaction_date,omitempty"`
 	Type              *string    `json:"type,omitempty"`
+
+	// Specific to order creation
+	PartnerId *string `json:"partner_id,omitempty"`
+
+	// Specific to order preview
+	Commission    *float64 `json:"commission,omitempty"`
+	Cost          *float64 `json:"cost,omitempty"`
+	ExtendedHours *bool    `json:"extended_hours,omitempty"`
+	Fees          *float64 `json:"fees,omitempty"`
+	MarginChange  *float64 `json:"margin_change,omitempty"`
+	Result        *bool    `json:"result,omitempty"`
 }
 
 // FIXME: There should be a better way of handling Order without stubbing
