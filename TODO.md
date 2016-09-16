@@ -9,9 +9,6 @@
   - [ ] `json: cannot unmarshal number 0E-8 into Go value of type int` on `LastFillQuantity` and such
   - [ ] Better error handling on `MarshalJSON` and `UnmarshalJSON`
 
-## Structs
-
-
 ## User endpoints
 |                | endpoint | test coverage | docs |
 |----------------|----------|---------------|------|
@@ -50,8 +47,33 @@
 
 ## Market Data endpoints
 
+|                                 | endpoint | test coverage | docs |
+|---------------------------------|----------|---------------|------|
+| GET markets/quotes              |          |               |      |
+| GET markets/timesales           |          |               |      |
+| GET markets/options/chains      |          |               |      |
+| GET markets/options/strikes     |          |               |      |
+| GET markets/options/expirations |          |               |      |
+| GET markets/history             |          |               |      |
+| GET markets/clock               |          |               |      |
+| GET markets/calendar            |          |               |      |
+| GET markets/search              |          |               |      |
+| GET markets/lookup              |          |               |      |
+
 ## Fundamentals endpoints
 
+*The fundatamental/ endpoint is still in beta, so most of the values in the JSON response has not been normalized. Thus, its equivalent methods will probably not be implemented in the near future until there is stable release from Tradier, or unless there is a desire from the community to do so.*
+
 ## Watchlists endpoints
+
+|                                | endpoint | test coverage | docs |
+|--------------------------------|----------|---------------|------|
+| GET watchlists                 |          |               |      |
+| GET watchlist/{id}             |          |               |      |
+| POST watchlist                 |          |               |      |
+| PUT watchlist                  |          |               |      |
+| DELETE watchlist               |          |               |      |
+| POST watchlists/{id}/symbols   |          |               |      |
+| DELETE watchlists/{id}/symbols |          |               |      |
 
 ## Streaming endpoints

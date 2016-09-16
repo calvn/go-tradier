@@ -18,7 +18,7 @@ func main() {
 
   client := tradier.NewClient(tc)
 
-  // list all repositories for the authenticated user
+  // Returns the profile of the user
   profile, _, err := client.User.Profile()
 }
 ```
