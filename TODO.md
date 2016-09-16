@@ -13,15 +13,14 @@
 
 
 ## User endpoints
-
-|                | endpoint | test coverage |
-|----------------|----------|---------------|
-| user/profile   | ✓        | ✓             |
-| user/balances  | ✓        |               |
-| user/positions | ✓        |               |
-| user/history   | ✓        |               |
-| user/gainloss  | ✓        |               |
-| user/orders    | ✓        |               |
+|                | endpoint | test coverage | docs |
+|----------------|----------|---------------|------|
+| user/profile   | ✓        | ✓             |      |
+| user/balances  | ✓        |               |      |
+| user/positions | ✓        |               |      |
+| user/history   | ✓        |               |      |
+| user/gainloss  | ✓        |               |      |
+| user/orders    | ✓        |               |      |
 
 - [x] ~~Fix `OrdersAccountEntry` to dynamically map to object~~
 - [x] `Order` should support indexing if it is a slice
@@ -30,24 +29,24 @@
 
 ## Account endpoints
 
-|                       | endpoint | test coverage |
-|-----------------------|----------|---------------|
-| account/balances      | ✓        |               |
-| account/positions     | ✓        |               |
-| account/history       | ✓        |               |
-| account/gainloss      | ✓        |               |
-| account/orders        | ✓        |               |
-| account/orders/status | ✓        |               |
+|                       | endpoint | test coverage | docs |
+|-----------------------|----------|---------------|------|
+| account/balances      | ✓        |               |      |
+| account/positions     | ✓        |               |      |
+| account/history       | ✓        |               |      |
+| account/gainloss      | ✓        |               |      |
+| account/orders        | ✓        |               |      |
+| account/orders/status | ✓        |               |      |
 
 ## Trading endpoints
 
-|                       | endpoint | test coverage |
-|-----------------------|----------|---------------|
-| order/create          |          |               |
-| order/create_multileg |          |               |
-| order/preview         |          |               |
-| order/update          |          |               |
-| order/cancel          |          |               |
+|                       | endpoint | test coverage | docs |
+|-----------------------|----------|---------------|------|
+| order/create          | ✓        |               |      |
+| order/create_multileg | ✓        |               |      |
+| order/preview         | ✓        |               |      |
+| order/update          | ✓        |               |      |
+| order/cancel          | ✓        |               |      |
 
 ## Market Data endpoints
 

@@ -45,8 +45,8 @@ type Order struct {
 	Result        *bool    `json:"result,omitempty"`
 }
 
-// FIXME: There should be a better way of handling Order without stubbing
-//        Order inside a struct, similar to MarshalJSON via map[string]interface{}
+// NOTE: There should be a better way of handling Order without stubbing
+//       Order inside a struct, similar to MarshalJSON via map[string]interface{}
 type order struct {
 	*Order `json:"order,omitempty"`
 }
@@ -77,18 +77,18 @@ func (o *Orders) UnmarshalJSON(b []byte) (err error) {
 }
 
 func (o *Orders) MarshalJSON() ([]byte, error) {
-	// If Order is null
+	// If []Order is empty
 	if len(o.Order) == 0 {
 		return json.Marshal("null")
 	}
 
-	// If Order slice is size 1, return object directly
+	// If []Order slice is size 1, return first and only object
 	if len(o.Order) == 1 {
 		return json.Marshal(map[string]interface{}{
 			"order": o.Order[0],
 		})
 	}
 
-	// Otherwise mashal Orders normally, in this case using []Order
+	// Otherwise entire mashal Orders object normally
 	return json.Marshal(*o)
 }

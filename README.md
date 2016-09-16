@@ -1,7 +1,7 @@
 # go-tradier
 Golang library for interacting with the Tradier API
 
-***Note:*** *This library is still under development, please use with caution!*
+***Note:*** *This library is still under development - use with discretion!*
 
 ## Authentication
 go-tradier does not directly handle authentication. However, it uses the `http.Client` so authentication can be done by passing an `http.Client` that can handle authentication. One way to do so is to use the [oauth2](https://github.com/golang/oauth2) library to achieve proper authentication. For a full working example refer to the `examples` directory.
@@ -26,4 +26,4 @@ func main() {
 
 This library is licensed under the MIT License as provided in [here](LICENSE.md).
 
-*Made with <3 in Go. Heavily borrowed from Google's go-github library*
+*Made with <3 in Go. Heavily borrowed from and influenced by Google's go-github library*
