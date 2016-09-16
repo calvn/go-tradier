@@ -1,5 +1,6 @@
 # go-tradier
-Golang library for interacting with the Tradier API
+
+Golang library for interacting with the [Tradier API](https://developer.tradier.com/documentation/)
 
 ***Note:*** *This library is still under development - use with discretion!*
 
