@@ -78,7 +78,7 @@ var wantUserOrders = &User{
 							Type:              String("market"),
 							Symbol:            String("GOOGL"),
 							Side:              String("buy"),
-							Quantity:          Int(1),
+							Quantity:          Float64(1),
 							Status:            String("pending"),
 							Duration:          String("gtc"),
 							AvgFillPrice:      Float64(0),

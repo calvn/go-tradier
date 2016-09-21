@@ -2,6 +2,7 @@ package tradier
 
 import (
 	"encoding/json"
+	"log"
 	"time"
 )
 
@@ -25,7 +26,7 @@ type Order struct {
 	ID                *int       `json:"id,omitempty"`
 	LastFillPrice     *float64   `json:"last_fill_price,omitempty"`
 	LastFillQuantity  *float64   `json:"last_fill_quantity,omitempty"`
-	Quantity          *int       `json:"quantity,omitempty"`
+	Quantity          *float64   `json:"quantity,omitempty"`
 	RemainingQuantity *float64   `json:"remaining_quantity,omitempty"`
 	Side              *string    `json:"side,omitempty"`
 	Status            *string    `json:"status,omitempty"`
@@ -52,6 +53,7 @@ type order struct {
 }
 
 func (o *Orders) UnmarshalJSON(b []byte) (err error) {
+	log.Println(string(b))
 	ordersStr := ""
 	ordersObj := orders{}
 	orderObj := order{}
@@ -61,7 +63,7 @@ func (o *Orders) UnmarshalJSON(b []byte) (err error) {
 		return nil
 	}
 
-	// If order is an array
+	// If order is a JSON array
 	if err = json.Unmarshal(b, &ordersObj); err == nil {
 		*o = Orders(ordersObj)
 		return nil
