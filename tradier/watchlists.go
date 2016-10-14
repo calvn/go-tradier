@@ -66,12 +66,24 @@ func (i *Items) UnmarshalJSON(b []byte) error {
 		var slice []*WatchlistItem
 		slice = append(slice, &obj)
 		*i = Items{Item: slice}
-		log.Println(string(b))
-		log.Println(itemObj)
 		return nil
 	}
 
 	return nil
+}
+
+func (i *Items) MarshalJSON() ([]byte, error) {
+	if len(i.Item) == 0 {
+		return json.Marshal("null")
+	}
+
+	if len(i.Item) == 1 {
+		return json.Marshal(map[string]interface{}{
+			"items": i.Item[0],
+		})
+	}
+
+	return json.Marshal(*i)
 }
 
 // Unmarshal json into Watchlist object
@@ -87,4 +99,10 @@ func (w *Watchlist) UnmarshalJSON(b []byte) error {
 	}
 
 	return nil
+}
+
+func (w *Watchlist) MarshalJSON() ([]byte, error) {
+	return json.Marshal(map[string]interface{}{
+		"watchlist": *w,
+	})
 }

@@ -9,6 +9,7 @@
   - [ ] `json: cannot unmarshal number 0E-8 into Go value of type int` on `LastFillQuantity` and such
   - [ ] Better error handling on `MarshalJSON` and `UnmarshalJSON`
 - [ ] Change slice of objects to slice of pointers on structs
+- [ ] Godocs
 
 ## Potential enhancements
 
