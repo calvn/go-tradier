@@ -8,6 +8,11 @@
   - [ ] `json: Invalid access token`
   - [ ] `json: cannot unmarshal number 0E-8 into Go value of type int` on `LastFillQuantity` and such
   - [ ] Better error handling on `MarshalJSON` and `UnmarshalJSON`
+- [ ] Change slice of objects to slice of pointers on structs
+
+## Potential enhancements
+
+Structs that are basically wrappers around slices (i.e. `Orders`) could be turned directly into slices. There would have to be changes in MarshalJSON() and UnmarshalJSON() for this to work. This way the underlying slice object can be accessed directly. In other words, `Orders.Order[0]` could be turned into `Orders[0]`.
 
 ## User endpoints
 |                | endpoint | test coverage | docs |
@@ -62,7 +67,7 @@
 
 ## Fundamentals endpoints
 
-*The fundatamental/ endpoint is still in beta, so most of the values in the JSON response has not been normalized. Thus, its equivalent methods will probably not be implemented in the near future until there is stable release from Tradier, or unless there is a desire from the community to do so.*
+*The fundamental/ endpoint is still in beta, so most of the values in the JSON response has not been normalized. Thus, its equivalent methods will probably not be implemented in the near future until there is stable release from Tradier, or unless there is a desire from the community to do so.*
 
 ## Watchlists endpoints
 
