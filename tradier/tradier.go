@@ -28,9 +28,10 @@ type Client struct {
 
 	common service
 
-	User    *UserService
-	Account *AccountService
-	Order   *OrderService
+	User       *UserService
+	Account    *AccountService
+	Order      *OrderService
+	Watchlists *WatchlistsService
 }
 
 type service struct {
@@ -52,8 +53,9 @@ func NewClient(httpClient *http.Client) *Client {
 
 	c.common.client = c
 	c.User = (*UserService)(&c.common)
-	c.Account = (*AccountService)(&c.common)
-	c.Order = (*OrderService)(&c.common)
+	c.Account = (*AccountService)(&c.common) // FIXME: should be AccountsService
+	c.Order = (*OrderService)(&c.common)     // FIXME: should be OrdersService
+	c.Watchlists = (*WatchlistsService)(&c.common)
 
 	return c
 }

@@ -2,7 +2,6 @@ package tradier
 
 import (
 	"encoding/json"
-	"log"
 	"time"
 )
 
@@ -53,7 +52,6 @@ type order struct {
 }
 
 func (o *Orders) UnmarshalJSON(b []byte) (err error) {
-	log.Println(string(b))
 	ordersStr := ""
 	ordersObj := orders{}
 	orderObj := order{}
