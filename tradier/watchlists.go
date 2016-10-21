@@ -1,20 +1,10 @@
 package tradier
 
-import (
-	"encoding/json"
-	"log"
-)
+import "encoding/json"
 
 type WatchlistsService service
 
-type Watchlists []*Watchlist
-
-// Private struct used to unmarshal JSON and hold the object a struct
-type watchlists struct {
-	Collection *struct {
-		Watchlist []Watchlist `json:"watchlist,omitempty"`
-	} `json:"watchlists,omitempty"`
-}
+type Watchlists []*watchlist
 
 type Watchlist struct {
 	Name     *string `json:"name,omitempty"`
@@ -24,10 +14,6 @@ type Watchlist struct {
 }
 
 type watchlist Watchlist
-
-type watchlistContainer struct {
-	*watchlist `json:"watchlist,omitempty"`
-}
 
 type Items struct {
 	Item []*WatchlistItem `json"item,omitempty"`
@@ -88,14 +74,13 @@ func (i *Items) MarshalJSON() ([]byte, error) {
 
 // Unmarshal json into Watchlist object
 func (w *Watchlist) UnmarshalJSON(b []byte) error {
-	wlc := watchlistContainer{}
+	var wlc struct {
+		*watchlist `json:"watchlist,omitempty"`
+	}
 
 	if err := json.Unmarshal(b, &wlc); err == nil {
 		*w = Watchlist(*wlc.watchlist)
 		return nil
-	} else {
-		log.Println(err)
-		return err
 	}
 
 	return nil
@@ -105,4 +90,42 @@ func (w *Watchlist) MarshalJSON() ([]byte, error) {
 	return json.Marshal(map[string]interface{}{
 		"watchlist": *w,
 	})
+}
+
+func (w *Watchlists) UnmarshalJSON(b []byte) error {
+	var wlc struct {
+		W struct {
+			W []*watchlist `json:"watchlist,omitempty"`
+		} `json:"watchlists,omitempty"`
+	}
+	var wlObj struct {
+		W struct {
+			W *watchlist `json:"watchlist,omitempty"`
+		} `json:"watchlists,omitempty"`
+	}
+	var wlNull string
+
+	// log.Println(string(b))
+
+	// If watchlist is null
+	if err := json.Unmarshal(b, &wlNull); err == nil {
+		return nil
+	}
+
+	// If watchlist is a JSON array
+	if err := json.Unmarshal(b, &wlc); err == nil {
+		*w = Watchlists(wlc.W.W)
+		// *w = wlc.Watchlists
+		return nil
+	}
+
+	// If watchlist is a single object
+	if err := json.Unmarshal(b, &wlObj); err == nil {
+		wl := make([]*watchlist, 0)
+		wl = append(wl, wlObj.W.W)
+		*w = Watchlists(wl)
+		return nil
+	}
+
+	return nil
 }
