@@ -74,12 +74,12 @@ Structs that are basically wrappers around slices (i.e. `Orders`) could be turne
 
 |                                | endpoint | test coverage | docs |
 |--------------------------------|----------|---------------|------|
-| GET watchlists                 |          |               |      |
-| GET watchlist/{id}             |          |               |      |
-| POST watchlist                 |          |               |      |
-| PUT watchlist                  |          |               |      |
-| DELETE watchlist               |          |               |      |
-| POST watchlists/{id}/symbols   |          |               |      |
+| GET watchlists                 | ✓        |               |      |
+| GET watchlist/{id}             | ✓        |               |      |
+| POST watchlist                 | ✓        |               |      |
+| PUT watchlist                  | ✓        |               |      |
+| DELETE watchlist               | ✓        |               |      |
+| POST watchlists/{id}/symbols   | ✓        |               |      |
 | DELETE watchlists/{id}/symbols |          |               |      |
 
 ## Streaming endpoints

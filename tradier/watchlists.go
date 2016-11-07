@@ -105,8 +105,6 @@ func (w *Watchlists) UnmarshalJSON(b []byte) error {
 	}
 	var wlNull string
 
-	// log.Println(string(b))
-
 	// If watchlist is null
 	if err := json.Unmarshal(b, &wlNull); err == nil {
 		return nil
@@ -128,4 +126,28 @@ func (w *Watchlists) UnmarshalJSON(b []byte) error {
 	}
 
 	return nil
+}
+
+func (w *Watchlists) MarshalJSON() ([]byte, error) {
+	// If []Watchlist is empty
+	if len(*w) == 0 {
+		return json.Marshal(map[string]interface{}{
+			"watchlists": "null",
+		})
+	}
+
+	// If []Watchlist is size 1, return first and only object
+	if len(*w) == 1 {
+		wl := *w
+		return json.Marshal(map[string]interface{}{
+			"watchlist": wl[0],
+		})
+	}
+
+	// Otherwhise marshal normally
+	return json.Marshal(map[string]interface{}{
+		"watchlists": map[string]interface{}{
+			"watchlist": *w,
+		},
+	})
 }
