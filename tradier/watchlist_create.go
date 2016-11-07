@@ -7,21 +7,21 @@ type WatchlistParams struct {
 	Symbols []string `url:symbols,omitempty,comma`
 }
 
-func (w *WatchlistsService) Create(name string, params *WatchlistParams) (*Watchlist, *Response, error) {
+func (s *WatchlistsService) Create(name string, params *WatchlistParams) (*Watchlist, *Response, error) {
 	// Populate data
 	data, err := query.Values(params)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	req, err := w.client.NewRequest("POST", "watchlists", data.Encode())
+	req, err := s.client.NewRequest("POST", "watchlists", data.Encode())
 	if err != nil {
 		return nil, nil, err
 	}
 
 	wl := &Watchlist{}
 
-	resp, err := w.client.Do(req, wl)
+	resp, err := s.client.Do(req, wl)
 	if err != nil {
 		return nil, resp, err
 	}
