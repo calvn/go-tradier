@@ -4,7 +4,7 @@ import "github.com/google/go-querystring/query"
 
 type WatchlistParams struct {
 	Name    string   `url:"name"`
-	Symbols []string `url:symbols,omitempty,comma`
+	Symbols []string `url:"symbols,omitempty,comma"`
 }
 
 func (s *WatchlistsService) Create(name string, params *WatchlistParams) (*Watchlist, *Response, error) {

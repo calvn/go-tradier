@@ -4,7 +4,7 @@ import "encoding/json"
 
 type WatchlistsService service
 
-type Watchlists []*watchlist
+type Watchlists []*Watchlist
 
 type Watchlist struct {
 	Name     *string `json:"name,omitempty"`
@@ -16,7 +16,7 @@ type Watchlist struct {
 type watchlist Watchlist
 
 type Items struct {
-	Item []*WatchlistItem `json"item,omitempty"`
+	Item []*WatchlistItem `json:"item,omitempty"`
 }
 
 type items Items
@@ -77,7 +77,15 @@ func (w *Watchlist) UnmarshalJSON(b []byte) error {
 	var wlc struct {
 		*watchlist `json:"watchlist,omitempty"`
 	}
+	wlObj := watchlist{}
 
+	// If not wrapped in anything
+	if err := json.Unmarshal(b, &wlObj); err == nil {
+		*w = Watchlist(wlObj)
+		return nil
+	}
+
+	// If wrapped in watchlist object
 	if err := json.Unmarshal(b, &wlc); err == nil {
 		*w = Watchlist(*wlc.watchlist)
 		return nil
@@ -95,12 +103,12 @@ func (w *Watchlist) MarshalJSON() ([]byte, error) {
 func (w *Watchlists) UnmarshalJSON(b []byte) error {
 	var wlc struct {
 		W struct {
-			W []*watchlist `json:"watchlist,omitempty"`
+			W []*Watchlist `json:"watchlist,omitempty"`
 		} `json:"watchlists,omitempty"`
 	}
 	var wlObj struct {
 		W struct {
-			W *watchlist `json:"watchlist,omitempty"`
+			W *Watchlist `json:"watchlist,omitempty"`
 		} `json:"watchlists,omitempty"`
 	}
 	var wlNull string
@@ -111,6 +119,12 @@ func (w *Watchlists) UnmarshalJSON(b []byte) error {
 	}
 
 	// If watchlist is a JSON array
+	// wlc.W.W = make([]*Watchlist, 3)
+	// data, err := json.Marshal(&wlc)
+	// if err != nil {
+	// 	return err
+	// }
+	// log.Printf("%+v", string(data))
 	if err := json.Unmarshal(b, &wlc); err == nil {
 		*w = Watchlists(wlc.W.W)
 		// *w = wlc.Watchlists
@@ -119,7 +133,7 @@ func (w *Watchlists) UnmarshalJSON(b []byte) error {
 
 	// If watchlist is a single object
 	if err := json.Unmarshal(b, &wlObj); err == nil {
-		wl := make([]*watchlist, 0)
+		wl := make([]*Watchlist, 0)
 		wl = append(wl, wlObj.W.W)
 		*w = Watchlists(wl)
 		return nil

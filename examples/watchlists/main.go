@@ -33,6 +33,8 @@ func main() {
 		log.Fatalf("Error fetching order: %s", err)
 	}
 
+	fmt.Printf("ID from first watchlist: %+q\n", *(*watchlists)[0].ID)
+
 	payload, err := json.Marshal(watchlists)
 	if err != nil {
 		log.Fatalf("Error marshaling orders to JSON: %s", err)

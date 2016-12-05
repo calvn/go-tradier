@@ -119,9 +119,10 @@ func (c *Client) Do(req *http.Request, v interface{}) (*Response, error) {
 	}
 
 	if resp.StatusCode == 400 {
-		b, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			return nil, err
+		var e error
+		b, e := ioutil.ReadAll(resp.Body)
+		if e != nil {
+			return nil, e
 		}
 		log.Println(string(b))
 		return nil, err
