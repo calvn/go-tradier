@@ -27,13 +27,11 @@ func main() {
 
 	client := tradier.NewClient(tc)
 
-	// log.Println("Fetching all watchlists")
+	// Fetch all watchlists
 	watchlists, _, err := client.Watchlists.All()
 	if err != nil {
 		log.Fatalf("Error fetching order: %s", err)
 	}
-
-	// fmt.Printf("ID from first watchlist: %+q\n", *(*watchlists)[0].ID)
 
 	payload, err := json.Marshal(watchlists)
 	if err != nil {
@@ -42,17 +40,16 @@ func main() {
 
 	fmt.Println(string(payload))
 
-	// log.Println("Fetching default watchlist")
+	// Fetch `default` watchlist
 	watchlist, _, err := client.Watchlists.Get("default")
 	if err != nil {
 		log.Fatalf("Error fetching order: %s", err)
 	}
-	// fmt.Printf("%q\n", watchlist)
 
 	payload, err = json.Marshal(watchlist)
 	if err != nil {
 		log.Fatalf("Error marshaling orders to JSON: %s", err)
 	}
 
-	// fmt.Println(string(payload))
+	fmt.Println(string(payload))
 }

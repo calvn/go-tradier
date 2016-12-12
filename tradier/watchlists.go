@@ -7,10 +7,11 @@ type WatchlistsService service
 type Watchlists []*Watchlist
 
 type Watchlist struct {
-	Name     *string `json:"name,omitempty"`
-	ID       *string `json:"id,omitempty"`
-	PublicID *string `json:"public_id,omitempty"`
-	Items    *Items  `json:"items,omitempty"`
+	Name      *string `json:"name,omitempty"`
+	ID        *string `json:"id,omitempty"`
+	PublicID  *string `json:"public_id,omitempty"`
+	Items     *Items  `json:"items,omitempty"`
+	unwrapped bool    // Used internally
 }
 
 type watchlist Watchlist
@@ -72,7 +73,6 @@ func (i *Items) MarshalJSON() ([]byte, error) {
 	return json.Marshal(*i)
 }
 
-// FIXME: Broken
 // Unmarshal json into Watchlist object
 func (w *Watchlist) UnmarshalJSON(b []byte) error {
 	var wlc struct {
@@ -80,15 +80,17 @@ func (w *Watchlist) UnmarshalJSON(b []byte) error {
 	}
 	wlObj := watchlist{}
 
+	// If wrapped in watchlist object
+	if err := json.Unmarshal(b, &wlc); err == nil {
+		if wlc.watchlist != nil {
+			*w = Watchlist(*wlc.watchlist)
+			return nil
+		}
+	}
+
 	// If not wrapped in anything
 	if err := json.Unmarshal(b, &wlObj); err == nil {
 		*w = Watchlist(wlObj)
-		return nil
-	}
-
-	// If wrapped in watchlist object
-	if err := json.Unmarshal(b, &wlc); err == nil {
-		*w = Watchlist(*wlc.watchlist)
 		return nil
 	}
 
@@ -96,7 +98,13 @@ func (w *Watchlist) UnmarshalJSON(b []byte) error {
 }
 
 func (w *Watchlist) MarshalJSON() ([]byte, error) {
-	return json.Marshal(*w)
+	if w.unwrapped {
+		return json.Marshal(*w)
+	}
+
+	return json.Marshal(map[string]interface{}{
+		"watchlist": *w,
+	})
 }
 
 func (w *Watchlists) UnmarshalJSON(b []byte) error {
@@ -118,18 +126,10 @@ func (w *Watchlists) UnmarshalJSON(b []byte) error {
 	}
 
 	// If watchlist is a JSON array
-	// wlc.W.W = make([]*Watchlist, 3)
-	// data, err := json.Marshal(&wlc)
-	// if err != nil {
-	// 	return err
-	// }
-	// log.Printf("%+v", string(data))
 	if err := json.Unmarshal(b, &wlc); err == nil {
-		*w = Watchlists(wlc.W.W)
-		// *w = wlc.Watchlists
+		*w = wlc.W.W
 		return nil
 	}
-
 	// If watchlist is a single object
 	if err := json.Unmarshal(b, &wlObj); err == nil {
 		wl := make([]*Watchlist, 0)
@@ -142,6 +142,11 @@ func (w *Watchlists) UnmarshalJSON(b []byte) error {
 }
 
 func (w *Watchlists) MarshalJSON() ([]byte, error) {
+	// Set wrapped to true to marshal differently
+	for _, wl := range *w {
+		wl.unwrapped = true
+	}
+
 	// If []Watchlist is empty
 	if len(*w) == 0 {
 		return json.Marshal(map[string]interface{}{
@@ -153,7 +158,9 @@ func (w *Watchlists) MarshalJSON() ([]byte, error) {
 	if len(*w) == 1 {
 		wl := *w
 		return json.Marshal(map[string]interface{}{
-			"watchlist": wl[0],
+			"watchlists": map[string]interface{}{
+				"watchlist": wl[0],
+			},
 		})
 	}
 
