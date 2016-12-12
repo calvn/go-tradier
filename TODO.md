@@ -80,6 +80,6 @@ Structs that are basically wrappers around slices (i.e. `Orders`) could be turne
 | PUT watchlist                  | ✓        |               |      |
 | DELETE watchlist               | ✓        |               |      |
 | POST watchlists/{id}/symbols   | ✓        |               |      |
-| DELETE watchlists/{id}/symbols |          |               |      |
+| DELETE watchlists/{id}/symbols | ✓        |               |      |
 
 ## Streaming endpoints

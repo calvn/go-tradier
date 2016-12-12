@@ -10,7 +10,7 @@ type Watchlist struct {
 	Name     *string `json:"name,omitempty"`
 	ID       *string `json:"id,omitempty"`
 	PublicID *string `json:"public_id,omitempty"`
-	Items    Items   `json:"items,omitempty"`
+	Items    *Items  `json:"items,omitempty"`
 }
 
 type watchlist Watchlist
@@ -72,6 +72,7 @@ func (i *Items) MarshalJSON() ([]byte, error) {
 	return json.Marshal(*i)
 }
 
+// FIXME: Broken
 // Unmarshal json into Watchlist object
 func (w *Watchlist) UnmarshalJSON(b []byte) error {
 	var wlc struct {
@@ -95,9 +96,7 @@ func (w *Watchlist) UnmarshalJSON(b []byte) error {
 }
 
 func (w *Watchlist) MarshalJSON() ([]byte, error) {
-	return json.Marshal(map[string]interface{}{
-		"watchlist": *w,
-	})
+	return json.Marshal(*w)
 }
 
 func (w *Watchlists) UnmarshalJSON(b []byte) error {
