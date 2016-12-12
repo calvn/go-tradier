@@ -27,7 +27,7 @@ Structs that are basically wrappers around slices (i.e. `Orders`) could be turne
 
 - [x] ~~Fix `OrdersAccountEntry` to dynamically map to object~~
 - [x] `Order` should support indexing if it is a slice
-- [ ] Add a generic UserRequest method that gets called by all user-related methods
+- [x] Add a generic UserRequest method that gets called by all user-related methods
 
 
 ## Account endpoints
@@ -55,7 +55,7 @@ Structs that are basically wrappers around slices (i.e. `Orders`) could be turne
 
 |                                 | endpoint | test coverage | docs |
 |---------------------------------|----------|---------------|------|
-| GET markets/quotes              |          |               |      |
+| GET markets/quotes              | ✓        |               |      |
 | GET markets/timesales           |          |               |      |
 | GET markets/options/chains      |          |               |      |
 | GET markets/options/strikes     |          |               |      |
