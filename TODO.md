@@ -5,7 +5,7 @@
 - [ ] Rate limiting tracking on the client
 - [ ] Determine best type (probably not float64) for holding currency
 - [ ] Handle errors gracefully
-  - [ ] `json: Invalid access token`
+  - [x] `json: Invalid access token`
   - [ ] `json: cannot unmarshal number 0E-8 into Go value of type int` on `LastFillQuantity` and such
   - [ ] Better error handling on `MarshalJSON` and `UnmarshalJSON`
 - [ ] Change slice of objects to slice of pointers on structs

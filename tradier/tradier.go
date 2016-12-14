@@ -3,9 +3,9 @@ package tradier
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"sync"
@@ -108,36 +108,10 @@ func newResponse(r *http.Response) *Response {
 func (c *Client) Do(req *http.Request, v interface{}) (*Response, error) {
 	// TODO: Do rate limit checking
 
-	// b, err := ioutil.ReadAll(req.Body)
-	// if err != nil {
-	// 	log.Println(err)
-	// }
-	//
-	// log.Printf("%s", b)
-
 	resp, err := c.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-
-	if resp.StatusCode == 400 {
-		var e error
-		b, e := ioutil.ReadAll(resp.Body)
-		if e != nil {
-			return nil, e
-		}
-		log.Println(string(b))
-		return nil, err
-	}
-
-	// log.Println(req.FormValue("symbol"))
-	//
-	// b, err := ioutil.ReadAll(resp.Body)
-	// if err != nil {
-	// 	log.Println(err)
-	// }
-	//
-	// log.Printf("%s", b)
 
 	defer func() {
 		// Drain up to 512 bytes and close the body to let the Transport reuse the connection
@@ -146,7 +120,12 @@ func (c *Client) Do(req *http.Request, v interface{}) (*Response, error) {
 	}()
 
 	response := newResponse(resp)
+	err = checkResponse(resp)
+	if err != nil {
+		return response, err
+	}
 
+	// Write to interface that implements io.Writer if one is provided
 	if v != nil {
 		if w, ok := v.(io.Writer); ok {
 			io.Copy(w, resp.Body)
@@ -159,6 +138,25 @@ func (c *Client) Do(req *http.Request, v interface{}) (*Response, error) {
 	}
 
 	return response, err
+}
+
+func checkResponse(r *http.Response) error {
+	if c := r.StatusCode; 200 <= c && c <= 299 {
+		return nil
+	}
+
+	// Read response body
+	data, err := ioutil.ReadAll(r.Body)
+	if err != nil && data != nil {
+		return err
+	}
+
+	switch {
+	case r.StatusCode == http.StatusUnauthorized:
+		return fmt.Errorf("%s", data)
+	}
+
+	return nil
 }
 
 // Bool is a helper routine that allocates a new bool value
