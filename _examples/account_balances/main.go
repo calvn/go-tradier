@@ -13,7 +13,7 @@ import (
 
 func main() {
 	// Load access token from .env
-	err := godotenv.Load("examples/watchlists/.env")
+	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
@@ -27,14 +27,12 @@ func main() {
 
 	client := tradier.NewClient(tc)
 
-	// Fetch quotes for AAPL and GOOGL
-	symbols := []string{"AAPL", "GOOGL"}
-	quotes, _, err := client.Quotes.Get(symbols)
+	balances, _, err := client.Account.Balances("6YA05708")
 	if err != nil {
 		log.Fatalf("Error fetching order: %s", err)
 	}
 
-	payload, err := json.Marshal(quotes)
+	payload, err := json.Marshal(balances)
 	if err != nil {
 		log.Fatalf("Error marshaling orders to JSON: %s", err)
 	}

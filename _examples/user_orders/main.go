@@ -13,7 +13,7 @@ import (
 
 func main() {
 	// Load access token from .env
-	err := godotenv.Load("examples/user_orders/.env")
+	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}

@@ -13,7 +13,7 @@ import (
 
 func main() {
 	// Load access token from .env
-	err := godotenv.Load("examples/account_balances/.env")
+	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
@@ -27,12 +27,20 @@ func main() {
 
 	client := tradier.NewClient(tc)
 
-	balances, _, err := client.Account.Balances("6YA05708")
+	params := &tradier.OrderParams{
+		Class:    "equity",
+		Symbol:   "AAPL",
+		Duration: "day",
+		Side:     "buy",
+		Quantity: 1,
+		Type:     "market",
+	}
+	order, _, err := client.Order.Create("6YA05708", params)
 	if err != nil {
 		log.Fatalf("Error fetching order: %s", err)
 	}
 
-	payload, err := json.Marshal(balances)
+	payload, err := json.Marshal(order)
 	if err != nil {
 		log.Fatalf("Error marshaling orders to JSON: %s", err)
 	}
