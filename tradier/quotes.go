@@ -7,33 +7,33 @@ type QuotesService service
 type Quotes []*Quote
 
 type Quote struct {
-	Symbol           string  `json:"symbol"`
-	Description      string  `json:"description"`
-	Exch             string  `json:"exch"`
-	Type             string  `json:"type"`
-	Last             float64 `json:"last"`
-	Change           float64 `json:"change"`
-	ChangePercentage float64 `json:"change_percentage"`
-	Volume           int     `json:"volume"`
-	AverageVolume    int     `json:"average_volume"`
-	LastVolume       int     `json:"last_volume"`
-	TradeDate        int64   `json:"trade_date"`
-	Open             float64 `json:"open"`
-	High             float64 `json:"high"`
-	Low              float64 `json:"low"`
-	Close            float64 `json:"close"`
-	Prevclose        float64 `json:"prevclose"`
-	Week52High       float64 `json:"week_52_high"`
-	Week52Low        float64 `json:"week_52_low"`
-	Bid              float64 `json:"bid"`
-	Bidsize          int     `json:"bidsize"`
-	Bidexch          string  `json:"bidexch"`
-	BidDate          int64   `json:"bid_date"`
-	Ask              float64 `json:"ask"`
-	Asksize          int     `json:"asksize"`
-	Askexch          string  `json:"askexch"`
-	AskDate          int64   `json:"ask_date"`
-	RootSymbols      string  `json:"root_symbols"`
+	Symbol           *string  `json:"symbol"`
+	Description      *string  `json:"description"`
+	Exch             *string  `json:"exch"`
+	Type             *string  `json:"type"`
+	Last             *float64 `json:"last"`
+	Change           *float64 `json:"change"`
+	ChangePercentage *float64 `json:"change_percentage"`
+	Volume           *int     `json:"volume"`
+	AverageVolume    *int     `json:"average_volume"`
+	LastVolume       *int     `json:"last_volume"`
+	TradeDate        *int64   `json:"trade_date"`
+	Open             *float64 `json:"open"`
+	High             *float64 `json:"high"`
+	Low              *float64 `json:"low"`
+	Close            *float64 `json:"close"`
+	Prevclose        *float64 `json:"prevclose"`
+	Week52High       *float64 `json:"week_52_high"`
+	Week52Low        *float64 `json:"week_52_low"`
+	Bid              *float64 `json:"bid"`
+	Bidsize          *int     `json:"bidsize"`
+	Bidexch          *string  `json:"bidexch"`
+	BidDate          *int64   `json:"bid_date"`
+	Ask              *float64 `json:"ask"`
+	Asksize          *int     `json:"asksize"`
+	Askexch          *string  `json:"askexch"`
+	AskDate          *int64   `json:"ask_date"`
+	RootSymbols      *string  `json:"root_symbols"`
 }
 
 type quote Quote
