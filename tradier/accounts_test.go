@@ -23,22 +23,18 @@ var accountsJSONArray = []byte(`{
 
 var accountsJSONNull = []byte(`"null"`)
 
-var accountsSingle = &Accounts{
-	Account: []Account{
-		{
-			AccountNumber: String("6YA05708"),
-		},
+var accountsSingle = Accounts{
+	{
+		AccountNumber: String("6YA05708"),
 	},
 }
 
-var accountsArray = &Accounts{
-	Account: []Account{
-		{
-			AccountNumber: String("6YA05708"),
-		},
-		{
-			AccountNumber: String("6YA05709"),
-		},
+var accountsArray = Accounts{
+	{
+		AccountNumber: String("6YA05708"),
+	},
+	{
+		AccountNumber: String("6YA05709"),
 	},
 }
 

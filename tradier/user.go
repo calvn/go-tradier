@@ -3,8 +3,8 @@ package tradier
 type UserService service
 
 type User struct {
-	Profile  *Profile  `json:"profile,omitempty"`
-	Accounts *Accounts `json:"accounts,omitempty"`
+	Profile  *Profile `json:"profile,omitempty"`
+	Accounts Accounts `json:"accounts,omitempty"`
 }
 
 func (s *UserService) UserRequest(uri string) (*User, *Response, error) {

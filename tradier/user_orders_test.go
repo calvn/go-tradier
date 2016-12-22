@@ -67,36 +67,34 @@ var (
 )
 
 var wantUserOrders = &User{
-	Accounts: &Accounts{
-		Account: []Account{
-			{
-				AccountNumber: String("6YA05991"),
-				Orders: &Orders{
-					Order: []Order{
-						{
-							ID:                Int(182042),
-							Type:              String("market"),
-							Symbol:            String("GOOGL"),
-							Side:              String("buy"),
-							Quantity:          Float64(1),
-							Status:            String("pending"),
-							Duration:          String("gtc"),
-							AvgFillPrice:      Float64(0),
-							ExecQuantity:      Float64(0),
-							LastFillPrice:     Float64(0),
-							LastFillQuantity:  Float64(0),
-							RemainingQuantity: Float64(1),
-							CreateDate:        &createdDate,
-							TransactionDate:   &transitionDate,
-							Class:             String("equity"),
-						},
+	Accounts: Accounts{
+		{
+			AccountNumber: String("6YA05991"),
+			Orders: &Orders{
+				Order: []Order{
+					{
+						ID:                Int(182042),
+						Type:              String("market"),
+						Symbol:            String("GOOGL"),
+						Side:              String("buy"),
+						Quantity:          Float64(1),
+						Status:            String("pending"),
+						Duration:          String("gtc"),
+						AvgFillPrice:      Float64(0),
+						ExecQuantity:      Float64(0),
+						LastFillPrice:     Float64(0),
+						LastFillQuantity:  Float64(0),
+						RemainingQuantity: Float64(1),
+						CreateDate:        &createdDate,
+						TransactionDate:   &transitionDate,
+						Class:             String("equity"),
 					},
 				},
 			},
-			{
-				AccountNumber: String("6YA05708"),
-				Orders:        &Orders{},
-			},
+		},
+		{
+			AccountNumber: String("6YA05708"),
+			Orders:        &Orders{},
 		},
 	},
 }

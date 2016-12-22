@@ -10,6 +10,7 @@
   - [ ] Better error handling on `MarshalJSON` and `UnmarshalJSON`
 - [ ] Change slice of objects to slice of pointers on structs
 - [ ] Godocs
+- [ ] Fix time zone. Get:"2016-08-05T17:24:34Z" | Want:"2016-08-05T17:24:34.000Z"
 
 ## Potential enhancements
 
