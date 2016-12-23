@@ -7,7 +7,8 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
-// NOTE: Refer to https://godoc.org/github.com/google/go-querystring/query for building the struct mapping
+// OrderParams provides the options for querying an order
+// Refer to https://godoc.org/github.com/google/go-querystring/query for building the struct mapping
 type OrderParams struct {
 	Class        string  `url:"class"`
 	Symbol       string  `url:"symbol"`
@@ -30,8 +31,8 @@ type OrderParams struct {
 
 // Create sends an order creation request. This method supports single-sided orders
 // as well as multileg and combo orders.
-func (s *OrderService) Create(accountId string, params *OrderParams) (*Orders, *Response, error) {
-	u := fmt.Sprintf("accounts/%s/orders", accountId)
+func (s *OrderService) Create(accountID string, params *OrderParams) (*Orders, *Response, error) {
+	u := fmt.Sprintf("accounts/%s/orders", accountID)
 
 	// Populate data
 	data, err := query.Values(params)

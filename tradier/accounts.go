@@ -49,6 +49,8 @@ func (a *Account) UnmarshalJSON(b []byte) error {
 
 	// If wrapped
 	if err := json.Unmarshal(b, &ac); err == nil {
+		// log.Println("here")
+		// log.Println(ac)
 		if ac.account != nil {
 			*a = Account(*ac.account)
 			return nil
@@ -66,21 +68,21 @@ func (a *Account) UnmarshalJSON(b []byte) error {
 
 // MarshalJSON marshals Account into JSON
 func (a *Account) MarshalJSON() ([]byte, error) {
-	return json.Marshal(*a)
-	// if a.unwrapped {
-	// 	return json.Marshal(*a)
-	// }
-	//
-	// return json.Marshal(map[string]interface{}{
-	// 	"account": *a,
-	// })
+	if a.unwrapped {
+		return json.Marshal(*a)
+	}
+
+	return json.Marshal(map[string]interface{}{
+		"account": *a,
+	})
 }
 
+// UnmarshalJSON unmarshals accounts into Accounts object
 func (a *Accounts) UnmarshalJSON(b []byte) (err error) {
 	var ac struct {
 		A struct {
 			A []*Account `json:"account,omitempty"`
-		} `json:"Accounts,omitempty"`
+		} `json:"accounts,omitempty"`
 	}
 	var aObj struct {
 		A struct {
@@ -88,6 +90,16 @@ func (a *Accounts) UnmarshalJSON(b []byte) (err error) {
 		} `json:"accounts,omitempty"`
 	}
 	var aNull string
+
+	var aUnwrapped struct {
+		A []*Account `json:"account,omitempty"`
+	}
+
+	// If unwrapped from user object
+	if err = json.Unmarshal(b, &aUnwrapped); err == nil {
+		*a = aUnwrapped.A
+		return nil
+	}
 
 	// If account is a string, i.e. "null"
 	if err = json.Unmarshal(b, &aNull); err == nil {
@@ -111,6 +123,7 @@ func (a *Accounts) UnmarshalJSON(b []byte) (err error) {
 	return nil
 }
 
+// MarshalJSON marshals Accounts into JSON
 func (a *Accounts) MarshalJSON() ([]byte, error) {
 	// Set wrapped to true to marshal differently
 	for _, acc := range *a {
@@ -136,8 +149,6 @@ func (a *Accounts) MarshalJSON() ([]byte, error) {
 
 	// Otherwhise marshal normally
 	return json.Marshal(map[string]interface{}{
-		"accounts": map[string]interface{}{
-			"account": *a,
-		},
+		"account": *a,
 	})
 }

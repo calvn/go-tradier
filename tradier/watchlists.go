@@ -2,6 +2,8 @@ package tradier
 
 import "encoding/json"
 
+// WatchlistsService handles routes related to watchlists
+// from the Tradier API.
 type WatchlistsService service
 
 type Watchlists []*Watchlist
@@ -73,7 +75,7 @@ func (i *Items) MarshalJSON() ([]byte, error) {
 	return json.Marshal(*i)
 }
 
-// Unmarshal json into Watchlist object
+// UnmarshalJSON unmarshals watchlist into Watchlist object
 func (w *Watchlist) UnmarshalJSON(b []byte) error {
 	var wlc struct {
 		*watchlist `json:"watchlist,omitempty"`

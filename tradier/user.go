@@ -1,10 +1,12 @@
 package tradier
 
+// UserService handles routes related to user inquiry
+// from the Tradier API.
 type UserService service
 
 type User struct {
-	Profile  *Profile `json:"profile,omitempty"`
-	Accounts Accounts `json:"accounts,omitempty"`
+	Profile  *Profile  `json:"profile,omitempty"`
+	Accounts *Accounts `json:"accounts,omitempty"`
 }
 
 func (s *UserService) UserRequest(uri string) (*User, *Response, error) {
