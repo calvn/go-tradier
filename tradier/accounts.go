@@ -130,14 +130,14 @@ func (a *Accounts) MarshalJSON() ([]byte, error) {
 		acc.unwrapped = true
 	}
 
-	// If []Watchlist is empty
+	// If []Accounts is empty
 	if len(*a) == 0 {
 		return json.Marshal(map[string]interface{}{
 			"accounts": "null",
 		})
 	}
 
-	// If []Watchlist is size 1, return first and only object
+	// If []Account is size 1, return first and only object
 	if len(*a) == 1 {
 		acc := *a
 		return json.Marshal(map[string]interface{}{
