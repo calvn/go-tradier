@@ -5,10 +5,10 @@ import (
 	"time"
 )
 
-// Orders represents the `orders` JSON object
-// If `order` is an array of objects, it can be accessed though indexing on Orders.Order
-// If `order` is a single object, it can be accessed on the zeroth element
-// If `order` is "null", Orders.Order will be empty
+// Orders represents the orders JSON object
+// If order is an array of objects, it can be accessed though indexing on Orders.Order
+// If order is a single object, it can be accessed on the zeroth element
+// If order is "null", Orders length will be zero
 type Orders []*Order
 
 // Order represents the `order` JSON object
@@ -68,7 +68,7 @@ func (o *Order) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// MarshalJSON marshals Order into JSON
+// MarshalJSON marshals Order into its JSON representation
 func (o *Order) MarshalJSON() ([]byte, error) {
 	if o.unwrapped {
 		return json.Marshal(*o)

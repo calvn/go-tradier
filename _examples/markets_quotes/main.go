@@ -29,7 +29,7 @@ func main() {
 
 	// Fetch quotes for AAPL and GOOGL
 	symbols := []string{"AAPL", "GOOGL"}
-	quotes, _, err := client.Quotes.Get(symbols)
+	quotes, _, err := client.Markets.Quotes(symbols)
 	if err != nil {
 		log.Fatalf("Error fetching order: %s", err)
 	}

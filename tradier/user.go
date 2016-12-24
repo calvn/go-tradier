@@ -4,12 +4,13 @@ package tradier
 // from the Tradier API.
 type UserService service
 
+// User represents the `user` JSON object
 type User struct {
 	Profile  *Profile  `json:"profile,omitempty"`
 	Accounts *Accounts `json:"accounts,omitempty"`
 }
 
-func (s *UserService) UserRequest(uri string) (*User, *Response, error) {
+func (s *UserService) userRequest(uri string) (*User, *Response, error) {
 	req, err := s.client.NewRequest("GET", uri, nil)
 	if err != nil {
 		return nil, nil, err

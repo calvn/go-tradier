@@ -11,6 +11,8 @@
 - [ ] Change slice of objects to slice of pointers on structs
 - [ ] Godocs
 - [ ] Fix time zone. Get:"2016-08-05T17:24:34Z" | Want:"2016-08-05T17:24:34.000Z"
+- [ ] Fix quotes to markets/quotes
+- [ ] Fix OrderService to OrdersService
 
 ## Potential enhancements
 
@@ -28,7 +30,7 @@ Structs that are basically wrappers around slices (i.e. `Orders`) could be turne
 
 - [x] ~~Fix `OrdersAccountEntry` to dynamically map to object~~
 - [x] `Order` should support indexing if it is a slice
-- [x] Add a generic UserRequest method that gets called by all user-related methods
+- [x] Add a generic userRequest method that gets called by all user-related methods
 
 
 ## Account endpoints
