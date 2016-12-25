@@ -3,36 +3,39 @@ package tradier
 import (
 	"bytes"
 	"encoding/json"
-	"log"
 	"reflect"
 	"testing"
 )
 
 var accountsJSONSingle = []byte(`{
-  "account": {
-    "account_number": "6YA05708"
-  }
+	"accounts": {
+		"account": {
+			"account_number": "6YA05708"
+		}
+	}
 }`)
 
 var accountsJSONArray = []byte(`{
-  "account": [{
-    "account_number": "6YA05708"
-  }, {
-    "account_number": "6YA05709"
-  }]
+	"accounts": {
+		"account": [{
+			"account_number": "6YA05708"
+		}, {
+			"account_number": "6YA05709"
+		}]
+	}
 }`)
 
 var accountsJSONNull = []byte(`{
 	"accounts": "null"
 }`)
 
-var accountsSingle = Accounts{
+var accountsSingle = &Accounts{
 	{
 		AccountNumber: String("6YA05708"),
 	},
 }
 
-var accountsArray = Accounts{
+var accountsArray = &Accounts{
 	{
 		AccountNumber: String("6YA05708"),
 	},
@@ -41,18 +44,16 @@ var accountsArray = Accounts{
 	},
 }
 
-var accountsNull = Accounts{}
+var accountsNull = &Accounts{}
 
 func TestAccounts_UnmarshalJSON_Single(t *testing.T) {
 	want := accountsSingle
 
-	got := Accounts{}
-	err := json.Unmarshal(accountsJSONSingle, &got)
+	got := &Accounts{}
+	err := json.Unmarshal(accountsJSONSingle, got)
 	if err != nil {
 		t.Errorf("Accounts.UnmarshalJSON error: %s", err)
 	}
-
-	log.Println(got)
 
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("got: %+v want: %+v", got, want)
@@ -80,8 +81,8 @@ func TestAccounts_MarshalJSON_Single(t *testing.T) {
 func TestAccounts_UnmarshalJSON_Array(t *testing.T) {
 	want := accountsArray
 
-	got := Accounts{}
-	err := json.Unmarshal(accountsJSONArray, &got)
+	got := &Accounts{}
+	err := json.Unmarshal(accountsJSONArray, got)
 	if err != nil {
 		t.Errorf("Accounts.UnmarshalJSON error: %s", err)
 	}
@@ -112,11 +113,11 @@ func TestAccounts_MarshalJSON_Array(t *testing.T) {
 func TestAccounts_UnmarshalJSON_Null(t *testing.T) {
 	want := accountsNull
 
-	got := Accounts{}
-	// err := json.Unmarshal(accountsJSONNull, &got)
-	// if err != nil {
-	// 	t.Errorf("Accounts.UnmarshalJSON error: %s", err)
-	// }
+	got := &Accounts{}
+	err := json.Unmarshal(accountsJSONNull, got)
+	if err != nil {
+		t.Errorf("Accounts.UnmarshalJSON error: %s", err)
+	}
 
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("got: %+v want: %+v", got, want)

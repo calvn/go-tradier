@@ -2,9 +2,10 @@ package tradier
 
 import (
 	"net/http"
-	"reflect"
 	"testing"
 	"time"
+
+	"github.com/kylelemons/godebug/pretty"
 )
 
 func TestActivityService_List(t *testing.T) {
@@ -23,8 +24,8 @@ func TestActivityService_List(t *testing.T) {
 		t.Errorf("User.Orders returned error: %v", err)
 	}
 
-	if want := wantUserOrders; !reflect.DeepEqual(got, want) {
-		t.Errorf("User.Orders = %+v, want %+v", got, want)
+	if diff := pretty.Compare(wantUserOrders, got); diff != "" {
+		t.Errorf("diff: %s", diff)
 	}
 }
 
@@ -33,25 +34,7 @@ var userOrdersJSON = []byte(`{
     "account": [
       {
         "account_number": "6YA05991",
-        "orders": {
-          "order": {
-            "id": 182042,
-            "type": "market",
-            "symbol": "GOOGL",
-            "side": "buy",
-            "quantity": 1,
-            "status": "pending",
-            "duration": "gtc",
-            "avg_fill_price": 0,
-            "exec_quantity": 0,
-            "last_fill_price": 0,
-            "last_fill_quantity": 0,
-            "remaining_quantity": 1,
-            "create_date": "2016-08-23T05:17:37.617Z",
-            "transaction_date": "2016-08-23T12:15:07.268Z",
-            "class": "equity"
-          }
-        }
+        "orders": "null"
       },
       {
         "account_number": "6YA05708",
@@ -70,25 +53,7 @@ var wantUserOrders = &User{
 	Accounts: &Accounts{
 		{
 			AccountNumber: String("6YA05991"),
-			Orders: &Orders{
-				{
-					ID:                Int(182042),
-					Type:              String("market"),
-					Symbol:            String("GOOGL"),
-					Side:              String("buy"),
-					Quantity:          Float64(1),
-					Status:            String("pending"),
-					Duration:          String("gtc"),
-					AvgFillPrice:      Float64(0),
-					ExecQuantity:      Float64(0),
-					LastFillPrice:     Float64(0),
-					LastFillQuantity:  Float64(0),
-					RemainingQuantity: Float64(1),
-					CreateDate:        &createdDate,
-					TransactionDate:   &transitionDate,
-					Class:             String("equity"),
-				},
-			},
+			Orders:        &Orders{},
 		},
 		{
 			AccountNumber: String("6YA05708"),
