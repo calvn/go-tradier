@@ -8,37 +8,39 @@ import (
 )
 
 var accountsJSONSingle = []byte(`{
-  "account": {
-    "account_number": "6YA05708"
-  }
+	"accounts": {
+		"account": {
+			"account_number": "6YA05708"
+		}
+	}
 }`)
 
 var accountsJSONArray = []byte(`{
-  "account": [{
-    "account_number": "6YA05708"
-  }, {
-    "account_number": "6YA05709"
-  }]
+	"accounts": {
+		"account": [{
+			"account_number": "6YA05708"
+		}, {
+			"account_number": "6YA05709"
+		}]
+	}
 }`)
 
-var accountsJSONNull = []byte(`"null"`)
+var accountsJSONNull = []byte(`{
+	"accounts": "null"
+}`)
 
 var accountsSingle = &Accounts{
-	Account: []Account{
-		{
-			AccountNumber: String("6YA05708"),
-		},
+	{
+		AccountNumber: String("6YA05708"),
 	},
 }
 
 var accountsArray = &Accounts{
-	Account: []Account{
-		{
-			AccountNumber: String("6YA05708"),
-		},
-		{
-			AccountNumber: String("6YA05709"),
-		},
+	{
+		AccountNumber: String("6YA05708"),
+	},
+	{
+		AccountNumber: String("6YA05709"),
 	},
 }
 
@@ -130,7 +132,7 @@ func TestAccounts_MarshalJSON_Null(t *testing.T) {
 		t.Error(err)
 	}
 
-	got, err := json.Marshal(accountsNull)
+	got, err := json.Marshal(&accountsNull)
 	if err != nil {
 		t.Errorf("Accounts.MarshalJSON error: %s", err)
 	}

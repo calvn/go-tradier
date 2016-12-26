@@ -7,9 +7,10 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
+// Update sends an order update request.
 // NOTE: Since this is using OrderParams, we should to some sort of checking or improve on error handling
-func (s *OrderService) Update(accountId, orderId string, params *OrderParams) (*Orders, *Response, error) {
-	u := fmt.Sprintf("accounts/%s/orders/%s", accountId, orderId)
+func (s *OrderService) Update(accountID, orderID string, params *OrderParams) (*Orders, *Response, error) {
+	u := fmt.Sprintf("accounts/%s/orders/%s", accountID, orderID)
 
 	// Populate data
 	data, err := query.Values(params)
