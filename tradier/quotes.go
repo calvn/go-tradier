@@ -6,10 +6,10 @@ import "encoding/json"
 // from the Tradier API.
 type MarketsService service
 
-// Quotes represents the quotes JSON object
+// Quotes represents the quotes JSON object.
 type Quotes []*Quote
 
-// Quote represents the quote JSON object
+// Quote represents the quote JSON object.
 type Quote struct {
 	Symbol           *string  `json:"symbol"`
 	Description      *string  `json:"description"`
@@ -42,7 +42,7 @@ type Quote struct {
 
 type quote Quote
 
-// UnmarshalJSON unmarshals quote into Quote object
+// UnmarshalJSON unmarshals quote into Quote object.
 func (q *Quote) UnmarshalJSON(b []byte) error {
 	var qc struct {
 		*quote `json:"quote,omitempty"`
@@ -66,12 +66,12 @@ func (q *Quote) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// MarshalJSON marshals Quote into its JSON representation
+// MarshalJSON marshals Quote into its JSON representation.
 func (q *Quote) MarshalJSON() ([]byte, error) {
 	return json.Marshal(*q)
 }
 
-// UnmarshalJSON unmarshals quotes into Quotes object
+// UnmarshalJSON unmarshals quotes into Quotes object.
 func (q *Quotes) UnmarshalJSON(b []byte) error {
 	var qc struct {
 		Q struct {
@@ -106,7 +106,7 @@ func (q *Quotes) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// MarshalJSON marshals Quotes into its JSON representation
+// MarshalJSON marshals Quotes into its JSON representation.
 func (q *Quotes) MarshalJSON() ([]byte, error) {
 	// If []Quote is empty
 	if len(*q) == 0 {

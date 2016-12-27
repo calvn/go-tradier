@@ -4,8 +4,8 @@ package tradier
 // from the Tradier API.
 type OrderService service
 
-// OrderParams specifies the query parameters for querying an order
-// Refer to https://godoc.org/github.com/google/go-querystring/query for building the struct mapping
+// OrderParams specifies the query parameters for querying an order.
+// Refer to https://godoc.org/github.com/google/go-querystring/query for building the struct mapping.
 type OrderParams struct {
 	Class        string  `url:"class"`
 	Symbol       string  `url:"symbol"`

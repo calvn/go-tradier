@@ -5,10 +5,10 @@ import (
 	"time"
 )
 
-// Accounts holds a slice of *Account
+// Accounts holds a slice of *Account.
 type Accounts []*Account
 
-// Account represents the account object
+// Account represents the account object.
 type Account struct {
 	AccountNumber *string `json:"account_number,omitempty"`
 
@@ -40,7 +40,7 @@ type Account struct {
 
 type account Account
 
-// UnmarshalJSON unmarshals account into Account object
+// UnmarshalJSON unmarshals account into Account object.
 func (a *Account) UnmarshalJSON(b []byte) error {
 	var ac struct {
 		*account `json:"account,omitempty"`
@@ -79,7 +79,7 @@ func (a *Account) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// UnmarshalJSON unmarshals accounts into Accounts object
+// UnmarshalJSON unmarshals accounts into Accounts object.
 func (a *Accounts) UnmarshalJSON(b []byte) (err error) {
 	var ac struct {
 		A struct {
@@ -126,7 +126,7 @@ func (a *Accounts) UnmarshalJSON(b []byte) (err error) {
 	return nil
 }
 
-// MarshalJSON marshals Accounts into JSON
+// MarshalJSON marshals Accounts into JSON.
 func (a *Accounts) MarshalJSON() ([]byte, error) {
 	// Set wrapped to true to marshal differently
 	for _, acc := range *a {

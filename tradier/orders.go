@@ -5,13 +5,10 @@ import (
 	"time"
 )
 
-// Orders represents the orders JSON object
-// If order is an array of objects, it can be accessed though indexing on Orders.Order
-// If order is a single object, it can be accessed on the zeroth element
-// If order is "null", Orders length will be zero
+// Orders represents the orders JSON object.
 type Orders []*Order
 
-// Order represents the `order` JSON object
+// Order represents the `order` JSON object.
 type Order struct {
 	AvgFillPrice      *float64   `json:"avg_fill_price,omitempty"`
 	Class             *string    `json:"class,omitempty"`
@@ -44,7 +41,7 @@ type Order struct {
 
 type order Order
 
-// UnmarshalJSON unmarshals order into Order object
+// UnmarshalJSON unmarshals order into Order object.
 func (o *Order) UnmarshalJSON(b []byte) error {
 	var oc struct {
 		*order `json:"order,omitempty"`
@@ -68,7 +65,7 @@ func (o *Order) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// MarshalJSON marshals Order into its JSON representation
+// MarshalJSON marshals Order into its JSON representation.
 func (o *Order) MarshalJSON() ([]byte, error) {
 	if o.unwrapped {
 		return json.Marshal(*o)
@@ -79,7 +76,7 @@ func (o *Order) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// UnmarshalJSON unmarshals orders into Orders object
+// UnmarshalJSON unmarshals orders into Orders object.
 func (o *Orders) UnmarshalJSON(b []byte) (err error) {
 	var oCollection struct {
 		O struct {
@@ -135,7 +132,7 @@ func (o *Orders) UnmarshalJSON(b []byte) (err error) {
 	return nil
 }
 
-// MarshalJSON marshals Orders into JSON
+// MarshalJSON marshals Orders into JSON.
 func (o *Orders) MarshalJSON() ([]byte, error) {
 	// Set wrapped to true to marshal differently
 	for _, order := range *o {

@@ -17,7 +17,7 @@ const (
 	userAgent      = "go-tradier/" + libraryVersion
 )
 
-// Client takes care of managing communication to the Tradier api
+// Client takes care of managing communication to the Tradier API.
 type Client struct {
 	clientMu sync.Mutex
 	client   *http.Client

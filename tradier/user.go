@@ -6,7 +6,7 @@ import "encoding/json"
 // from the Tradier API.
 type UserService service
 
-// User represents the `user` JSON object
+// User represents the user JSON object.
 type User struct {
 	// Profile is specific to users/profile
 	Profile *Profile `json:"profile,omitempty"`

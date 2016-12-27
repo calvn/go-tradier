@@ -2,8 +2,8 @@ package tradier
 
 import "github.com/google/go-querystring/query"
 
-// WatchlistParams specifies the query parameters for handling watchlist creation
-// Refer to https://godoc.org/github.com/google/go-querystring/query for building the struct mapping
+// WatchlistParams specifies the query parameters for handling watchlist creation.
+// Refer to https://godoc.org/github.com/google/go-querystring/query for building the struct mapping.
 type WatchlistParams struct {
 	Name    string   `url:"name"`
 	Symbols []string `url:"symbols,omitempty,comma"`

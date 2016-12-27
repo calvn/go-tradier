@@ -8,7 +8,7 @@ import (
 )
 
 // setup sets up a test HTTP server along with a tradier.Client that is
-// configured to talk to that test server.  Tests should register handlers on
+// configured to talk to that test server. Tests should register handlers on
 // mux which provide mock responses for the API method being tested.
 var (
 	// mux is the HTTP request multiplexer used with the test server.

@@ -1,6 +1,6 @@
 package tradier
 
-// Balances represents the balances object
+// Balances represents the balances object.
 type Balances struct {
 	AccountNumber *string `json:"account_number,omitempty"`
 	AccountType   *string `json:"account_type,omitempty"`

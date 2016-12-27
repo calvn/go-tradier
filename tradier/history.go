@@ -5,14 +5,14 @@ import (
 	"time"
 )
 
-// History represents the history object
+// History represents the history object.
 type History struct {
 	Event []Event `json:"event,omitempty"`
 }
 
 type history History
 
-// Event represents the event object
+// Event represents the event object.
 type Event struct {
 	Amount   *float64   `json:"amount,omitempty"`
 	Date     *time.Time `json:"date,omitempty"`
@@ -43,7 +43,7 @@ type event struct {
 	*Event `json:"event,omitempty"`
 }
 
-// UnmarshalJSON unmarshals history into History object
+// UnmarshalJSON unmarshals history into History object.
 func (h *History) UnmarshalJSON(b []byte) (err error) {
 	historyStr := ""
 	historyObj := history{}
@@ -71,7 +71,7 @@ func (h *History) UnmarshalJSON(b []byte) (err error) {
 	return nil
 }
 
-// MarshalJSON marshals History into its JSON representation
+// MarshalJSON marshals History into its JSON representation.
 func (h *History) MarshalJSON() ([]byte, error) {
 	// If []Event is empty
 	if len(h.Event) == 0 {
