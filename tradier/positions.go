@@ -31,7 +31,7 @@ func (p *Positions) UnmarshalJSON(b []byte) (err error) {
 	positionsObj := positions{}
 	positionObj := position{}
 
-	// If postion is a string, i.e. "null"
+	// If position is a string, i.e. "null"
 	if err = json.Unmarshal(b, &positionsStr); err == nil {
 		return nil
 	}

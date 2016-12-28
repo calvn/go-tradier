@@ -1,5 +1,7 @@
 # go-tradier
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/calvn/go-tradier)](https://goreportcard.com/report/github.com/calvn/go-tradier)
+
 Golang library for interacting with the [Tradier API](https://developer.tradier.com/documentation/)
 
 ***Note:*** *This library is still under development - use with discretion!*
