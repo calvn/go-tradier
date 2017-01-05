@@ -21,7 +21,7 @@ func (e *Errors) Error() string {
 		errors[i] = fmt.Sprintf("  %s", err)
 	}
 
-	return fmt.Sprintf("%d errors occured:\n%s", len(e.Err), strings.Join(errors, "\n"))
+	return fmt.Sprintf("%d errors occurred:\n%s", len(e.Err), strings.Join(errors, "\n"))
 }
 
 // AppendStrings appends a slice of strings to *Errors.Err
