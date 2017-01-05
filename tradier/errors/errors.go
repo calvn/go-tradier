@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// Errors hold a collection of errors returned by a response
+// Errors hold a collection of errors returned by a response.
 type Errors struct {
 	Err []error `json:"error"`
 }
@@ -24,7 +24,7 @@ func (e *Errors) Error() string {
 	return fmt.Sprintf("%d errors occurred:\n%s", len(e.Err), strings.Join(errors, "\n"))
 }
 
-// AppendStrings appends a slice of strings to *Errors.Err
+// AppendStrings appends a slice of strings to *Errors.Err.
 func (e *Errors) AppendStrings(errorStrings []string) {
 	for _, s := range errorStrings {
 		e.Err = append(e.Err, fmt.Errorf(s))
