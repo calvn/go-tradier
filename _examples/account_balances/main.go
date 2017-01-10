@@ -38,4 +38,12 @@ func main() {
 	}
 
 	fmt.Println(string(payload))
+
+	// Unmarshal Balances into its JSON representation
+	// var bal tradier.Balances
+	// err = json.Unmarshal(payload, &bal)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// fmt.Printf("%+v\n", bal)
 }
