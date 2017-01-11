@@ -37,7 +37,6 @@ type Order struct {
 	MarginChange  *float64 `json:"margin_change,omitempty"`
 	Result        *bool    `json:"result,omitempty"`   // Not present in documentation
 	Strategy      *string  `json:"strategy,omitempty"` // Not present in documentation, specific to multileg
-	unwrapped     bool
 }
 
 type order Order
@@ -79,6 +78,7 @@ func (o *Order) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON unmarshals orders into Orders object.
 func (o *Orders) UnmarshalJSON(b []byte) (err error) {
+	// fmt.Println(string(b))
 	var oCollection struct {
 		O struct {
 			O []*Order `json:"order,omitempty"`
@@ -101,14 +101,18 @@ func (o *Orders) UnmarshalJSON(b []byte) (err error) {
 
 	// If unwrapped from user object
 	if err = json.Unmarshal(b, &oUnwrapped); err == nil {
-		*o = oUnwrapped.O
-		return nil
+		if len(oUnwrapped.O) > 0 {
+			*o = oUnwrapped.O
+			return nil
+		}
 	}
 
 	// If unwrapped from user object
 	if err = json.Unmarshal(b, &oSingle); err == nil {
-		*o = Orders{oSingle.O}
-		return nil
+		if oSingle.O != nil {
+			*o = Orders{oSingle.O}
+			return nil
+		}
 	}
 
 	// If order is a string, i.e. "null"
@@ -151,12 +155,16 @@ func (o *Orders) MarshalJSON() ([]byte, error) {
 	if len(*o) == 1 {
 		order := *o
 		return json.Marshal(map[string]interface{}{
-			"order": order[0],
+			"orders": map[string]interface{}{
+				"order": order[0],
+			},
 		})
 	}
 
 	// Otherwhise marshal normally
 	return json.Marshal(map[string]interface{}{
-		"order": *o,
+		"orders": map[string]interface{}{
+			"order": *o,
+		},
 	})
 }
