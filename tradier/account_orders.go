@@ -11,9 +11,7 @@ func (s *AccountService) Orders(accountID string) (*Orders, *Response, error) {
 		return nil, nil, err
 	}
 
-	o := &Orders{
-		unwrapped: true,
-	}
+	o := &Orders{}
 
 	resp, err := s.client.Do(req, o)
 	if err != nil {
