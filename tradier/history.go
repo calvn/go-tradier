@@ -7,7 +7,7 @@ import (
 
 // History represents the history object.
 type History struct {
-	Event []Event `json:"event,omitempty"`
+	Event []*Event `json:"event,omitempty"`
 }
 
 type history History
@@ -63,7 +63,7 @@ func (h *History) UnmarshalJSON(b []byte) (err error) {
 	// If event is an object
 	if err = json.Unmarshal(b, &eventObj); err == nil {
 		*h = History{
-			Event: []Event{*eventObj.Event},
+			Event: []*Event{eventObj.Event},
 		}
 		return nil
 	}

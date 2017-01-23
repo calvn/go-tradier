@@ -2,10 +2,6 @@ package tradier
 
 import "encoding/json"
 
-// MarketsService handles routes related to orders
-// from the Tradier API.
-type MarketsService service
-
 // Quotes represents the quotes JSON object.
 type Quotes []*Quote
 

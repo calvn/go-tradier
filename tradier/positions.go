@@ -9,8 +9,6 @@ import (
 // Positions represents the positions JSON object.
 type Positions []*Position
 
-type positions Positions
-
 // Position represents the position JSON object.
 type Position struct {
 	CostBasis    *float64   `json:"cost_basis,omitempty"`
@@ -42,13 +40,13 @@ func (p *Positions) UnmarshalJSON(b []byte) error {
 		return nil
 	}
 
-	// If watchlist is a JSON array
+	// If position is a JSON array
 	if err = json.Unmarshal(b, &posCol); err == nil {
 		*p = posCol.P.P
 		return nil
 	}
 
-	// If watchlist is a single object
+	// If position is a single object
 	if err = json.Unmarshal(b, &posObj); err == nil {
 		pos := make([]*Position, 1)
 		pos[0] = posObj.P.P

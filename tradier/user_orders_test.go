@@ -8,7 +8,7 @@ import (
 	"github.com/kylelemons/godebug/pretty"
 )
 
-func TestActivityService_List(t *testing.T) {
+func TestUserService_Orders(t *testing.T) {
 	setup()
 	defer teardown()
 
