@@ -40,6 +40,8 @@ func main() {
 		log.Fatalf("Error fetching order: %s", err)
 	}
 
+	log.Printf("%+v", order)
+
 	payload, err := json.Marshal(order)
 	if err != nil {
 		log.Fatalf("Error marshaling orders to JSON: %s", err)

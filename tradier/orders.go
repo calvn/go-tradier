@@ -41,7 +41,8 @@ type Order struct {
 	OrderCost     *float64 `json:"order_cost,omitempty"`
 	Result        *bool    `json:"result,omitempty"`   // Not present in documentation
 	Strategy      *string  `json:"strategy,omitempty"` // Not present in documentation, specific to multileg
-	unwrapped     bool
+
+	unwrapped bool
 }
 
 type order Order
