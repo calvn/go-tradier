@@ -56,8 +56,8 @@ var marketsTimeSalesJSON = []byte(`{
 }`)
 
 var (
-	data1Time = time.Date(2017, 1, 20, 9, 30, 0, 000000000, time.UTC)
-	data2Time = time.Date(2017, 1, 20, 9, 30, 29, 000000000, time.UTC)
+	data1Time = Time{time.Date(2017, 1, 20, 9, 30, 0, 000000000, time.UTC)}
+	data2Time = Time{time.Date(2017, 1, 20, 9, 30, 29, 000000000, time.UTC)}
 )
 
 var wantMarketsTimeSales = &Series{

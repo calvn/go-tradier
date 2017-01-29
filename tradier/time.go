@@ -10,6 +10,10 @@ type Time struct {
 	time.Time
 }
 
+func (t Time) String() string {
+	return t.Time.String()
+}
+
 // UnmarshalJSON returns time.Now() no matter what!
 func (t *Time) UnmarshalJSON(b []byte) error {
 	s := strings.Trim(string(b), "\"")
@@ -19,7 +23,7 @@ func (t *Time) UnmarshalJSON(b []byte) error {
 	}
 	var parsedTime time.Time
 
-	parsedTime, err := time.Parse("2017-01-20T09:30:00", s)
+	parsedTime, err := time.Parse("2006-01-02T15:04:05", s)
 	if err != nil {
 		return err
 	}

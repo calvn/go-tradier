@@ -1,9 +1,6 @@
 package tradier
 
-import (
-	"encoding/json"
-	"time"
-)
+import "encoding/json"
 
 // Series represents the series JSON object from /markets/timesales.
 type Series struct {
@@ -14,48 +11,31 @@ type series Series
 
 // Data represents the data JSON object from /markets/timesales.
 type Data struct {
-	Price     *float64   `json:"price,omitempty"`
-	Time      *time.Time `json:"time,omitempty"`
-	Timestamp *int       `json:"timestamp,omitempty"`
-	Volume    *int       `json:"volume,omitempty"`
+	Price     *float64 `json:"price,omitempty"`
+	Time      *Time    `json:"time,omitempty"`
+	Timestamp *int     `json:"timestamp,omitempty"`
+	Volume    *int     `json:"volume,omitempty"`
 }
 
 type data Data
 
 // UnmarshalJSON unmarshals series into Series object.
-func (s *Series) UnmarshalJSON(b []byte) (err error) {
-	seriesNull := ""
-	seriesObj := series{}
-	dataObj := data{}
-	dataCol := []*Data{}
+func (s *Series) UnmarshalJSON(b []byte) error {
+	// FIXME: Need to handle the case of unmarshalling single and emoty "data" objects
+	var seriesCol struct {
+		// S *Series `json:"series,omitempty"`
+		S struct {
+			D []*Data `json:"data,omitempty"`
+		} `json:"series,omitempty"`
+	}
+	var err error
 
-	// If series is a string, i.e. "null"
-	if err = json.Unmarshal(b, &seriesNull); err == nil {
+	if err = json.Unmarshal(b, &seriesCol); err == nil {
+		*s = Series{Data: seriesCol.S.D}
 		return nil
 	}
 
-	// If series is non-empty
-	if err = json.Unmarshal(b, &seriesObj); err == nil {
-		*s = Series(seriesObj)
-		return nil
-	}
-
-	// If data is an object
-	if err = json.Unmarshal(b, &dataObj); err == nil {
-		d := Data(dataObj)
-		*s = Series{
-			Data: []*Data{&d},
-		}
-		return nil
-	}
-
-	if err = json.Unmarshal(b, &dataCol); err == nil {
-		*s = Series{
-			Data: dataCol,
-		}
-	}
-
-	return nil
+	return err
 }
 
 // MarshalJSON marshals Series into its JSON representation.
