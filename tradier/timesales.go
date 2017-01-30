@@ -55,7 +55,6 @@ func (s *Series) UnmarshalJSON(b []byte) error {
 		return nil
 	}
 
-	// If positions is null
 	if err = json.Unmarshal(b, &seriesStr); err == nil {
 		return nil
 	}
@@ -65,18 +64,23 @@ func (s *Series) UnmarshalJSON(b []byte) error {
 
 // MarshalJSON marshals Series into its JSON representation.
 func (s *Series) MarshalJSON() ([]byte, error) {
-	// If []Event is empty
 	if len(s.Data) == 0 {
-		return json.Marshal("null")
-	}
-
-	// If []Event is size 1, return first and only object
-	if len(s.Data) == 1 {
 		return json.Marshal(map[string]interface{}{
-			"data": s.Data[0],
+			"series": "null",
 		})
 	}
 
-	// Otherwise mashal entire History object normally
-	return json.Marshal(*s)
+	if len(s.Data) == 1 {
+		return json.Marshal(map[string]interface{}{
+			"series": map[string]interface{}{
+				"data": *(s.Data)[0],
+			},
+		})
+	}
+
+	return json.Marshal(map[string]interface{}{
+		"series": map[string]interface{}{
+			"data": s.Data,
+		},
+	})
 }
