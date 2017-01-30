@@ -21,17 +21,42 @@ type data Data
 
 // UnmarshalJSON unmarshals series into Series object.
 func (s *Series) UnmarshalJSON(b []byte) error {
-	// FIXME: Need to handle the case of unmarshalling single and emoty "data" objects
 	var seriesCol struct {
 		// S *Series `json:"series,omitempty"`
 		S struct {
 			D []*Data `json:"data,omitempty"`
 		} `json:"series,omitempty"`
 	}
+	var seriesObj struct {
+		S struct {
+			D *Data `json:"data,omitempty"`
+		} `json:"seris,omitempty"`
+	}
+
+	var seriesStr struct {
+		S string `json:"series,omitempty"`
+	}
+
 	var err error
 
 	if err = json.Unmarshal(b, &seriesCol); err == nil {
-		*s = Series{Data: seriesCol.S.D}
+		*s = Series{
+			Data: seriesCol.S.D,
+		}
+		return nil
+	}
+
+	if err = json.Unmarshal(b, &seriesObj); err == nil {
+		*s = Series{
+			Data: []*Data{
+				seriesObj.S.D,
+			},
+		}
+		return nil
+	}
+
+	// If positions is null
+	if err = json.Unmarshal(b, &seriesStr); err == nil {
 		return nil
 	}
 
