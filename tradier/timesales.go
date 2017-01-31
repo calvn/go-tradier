@@ -30,7 +30,7 @@ func (s *Series) UnmarshalJSON(b []byte) error {
 	var seriesObj struct {
 		S struct {
 			D *Data `json:"data,omitempty"`
-		} `json:"seris,omitempty"`
+		} `json:"series,omitempty"`
 	}
 
 	var seriesStr struct {
@@ -39,10 +39,7 @@ func (s *Series) UnmarshalJSON(b []byte) error {
 
 	var err error
 
-	if err = json.Unmarshal(b, &seriesCol); err == nil {
-		*s = Series{
-			Data: seriesCol.S.D,
-		}
+	if err = json.Unmarshal(b, &seriesStr); err == nil {
 		return nil
 	}
 
@@ -55,7 +52,10 @@ func (s *Series) UnmarshalJSON(b []byte) error {
 		return nil
 	}
 
-	if err = json.Unmarshal(b, &seriesStr); err == nil {
+	if err = json.Unmarshal(b, &seriesCol); err == nil {
+		*s = Series{
+			Data: seriesCol.S.D,
+		}
 		return nil
 	}
 
