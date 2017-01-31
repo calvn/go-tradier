@@ -37,12 +37,12 @@ Structs that are basically wrappers around slices (i.e. `Orders`) could be turne
 ## User endpoints
 |                | endpoint | test coverage | docs |
 |----------------|----------|---------------|------|
-| user/profile   | ✓        | ✓             |      |
-| user/balances  | ✓        |               |      |
-| user/positions | ✓        |               |      |
-| user/history   | ✓        |               |      |
-| user/gainloss  | ✓        |               |      |
-| user/orders    | ✓        |               |      |
+| user/profile   | ✓        | ✓             | ✓    |
+| user/balances  | ✓        |               | ✓    |
+| user/positions | ✓        |               | ✓    |
+| user/history   | ✓        |               | ✓    |
+| user/gainloss  | ✓        |               | ✓    |
+| user/orders    | ✓        |               | ✓    |
 
 - [x] ~~Fix `OrdersAccountEntry` to dynamically map to object~~
 - [x] `Order` should support indexing if it is a slice
@@ -53,29 +53,29 @@ Structs that are basically wrappers around slices (i.e. `Orders`) could be turne
 
 |                       | endpoint | test coverage | docs |
 |-----------------------|----------|---------------|------|
-| account/balances      | ✓        |               |      |
-| account/positions     | ✓        |               |      |
-| account/history       | ✓        |               |      |
-| account/gainloss      | ✓        |               |      |
-| account/orders        | ✓        |               |      |
-| account/orders/status | ✓        |               |      |
+| account/balances      | ✓        |               | ✓    |
+| account/positions     | ✓        |               | ✓    |
+| account/history       | ✓        |               | ✓    |
+| account/gainloss      | ✓        |               | ✓    |
+| account/orders        | ✓        |               | ✓    |
+| account/orders/status | ✓        |               | ✓    |
 
 ## Trading endpoints
 
 |                       | endpoint | test coverage | docs |
 |-----------------------|----------|---------------|------|
-| order/create          | ✓        |               |      |
-| order/create_multileg | ✓        |               |      |
-| order/preview         | ✓        |               |      |
-| order/update          | ✓        |               |      |
-| order/cancel          | ✓        |               |      |
+| order/create          | ✓        |               | ✓    |
+| order/create_multileg | ✓        |               | ✓    |
+| order/preview         | ✓        |               | ✓    |
+| order/update          | ✓        |               | ✓    |
+| order/cancel          | ✓        |               | ✓    |
 
 ## Market Data endpoints
 
 |                                 | endpoint | test coverage | docs |
 |---------------------------------|----------|---------------|------|
-| GET markets/quotes              | ✓        |               |      |
-| GET markets/timesales           |          |               |      |
+| GET markets/quotes              | ✓        |               | ✓    |
+| GET markets/timesales           | ✓        | ✓             | ✓    |
 | GET markets/options/chains      |          |               |      |
 | GET markets/options/strikes     |          |               |      |
 | GET markets/options/expirations |          |               |      |
@@ -93,13 +93,13 @@ Structs that are basically wrappers around slices (i.e. `Orders`) could be turne
 
 |                                | endpoint | test coverage | docs |
 |--------------------------------|----------|---------------|------|
-| GET watchlists                 | ✓        |               |      |
-| GET watchlist/{id}             | ✓        |               |      |
-| POST watchlist                 | ✓        |               |      |
-| PUT watchlist                  | ✓        |               |      |
-| DELETE watchlist               | ✓        |               |      |
-| POST watchlists/{id}/symbols   | ✓        |               |      |
-| DELETE watchlists/{id}/symbols | ✓        |               |      |
+| GET watchlists                 | ✓        |               | ✓    |
+| GET watchlist/{id}             | ✓        |               | ✓    |
+| POST watchlist                 | ✓        |               | ✓    |
+| PUT watchlist                  | ✓        |               | ✓    |
+| DELETE watchlist               | ✓        |               | ✓    |
+| POST watchlists/{id}/symbols   | ✓        |               | ✓    |
+| DELETE watchlists/{id}/symbols | ✓        |               | ✓    |
 
 ## Streaming endpoints
 
