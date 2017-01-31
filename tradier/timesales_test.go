@@ -96,7 +96,7 @@ func TestTimesales_MarshalJSON_Single(t *testing.T) {
 
 	got, err := json.Marshal(timesalesSingle)
 	if err != nil {
-		t.Errorf("Accounts.MarshalJSON error: %s", err)
+		t.Errorf("Series.MarshalJSON error: %s", err)
 	}
 
 	if !reflect.DeepEqual(got, want) {
@@ -110,7 +110,7 @@ func TestTimesales_UnmarshalJSON_Array(t *testing.T) {
 	got := &Series{}
 	err := json.Unmarshal(timesalesJSONArray, got)
 	if err != nil {
-		t.Errorf("Accounts.UnmarshalJSON error: %s", err)
+		t.Errorf("Series.UnmarshalJSON error: %s", err)
 	}
 
 	if !reflect.DeepEqual(got, want) {
@@ -128,7 +128,7 @@ func TestTimesales_MarshalJSON_Array(t *testing.T) {
 
 	got, err := json.Marshal(timesalesArray)
 	if err != nil {
-		t.Errorf("Accounts.MarshalJSON error: %s", err)
+		t.Errorf("Series.MarshalJSON error: %s", err)
 	}
 
 	if !reflect.DeepEqual(got, want) {
@@ -136,34 +136,34 @@ func TestTimesales_MarshalJSON_Array(t *testing.T) {
 	}
 }
 
-// func TestAccounts_UnmarshalJSON_Null(t *testing.T) {
-// 	want := accountsNull
-//
-// 	got := &Accounts{}
-// 	err := json.Unmarshal(accountsJSONNull, got)
-// 	if err != nil {
-// 		t.Errorf("Accounts.UnmarshalJSON error: %s", err)
-// 	}
-//
-// 	if !reflect.DeepEqual(got, want) {
-// 		t.Errorf("got: %+v want: %+v", got, want)
-// 	}
-// }
-//
-// func TestAccounts_MarshalJSON_Null(t *testing.T) {
-// 	buf := &bytes.Buffer{}
-// 	err := json.Compact(buf, accountsJSONNull)
-// 	want := buf.Bytes()
-// 	if err != nil {
-// 		t.Error(err)
-// 	}
-//
-// 	got, err := json.Marshal(&accountsNull)
-// 	if err != nil {
-// 		t.Errorf("Accounts.MarshalJSON error: %s", err)
-// 	}
-//
-// 	if !reflect.DeepEqual(got, want) {
-// 		t.Errorf("got: %s want: %s", got, want)
-// 	}
-// }
+func TestTimesales_UnmarshalJSON_Null(t *testing.T) {
+	want := timesalesEmpty
+
+	got := &Series{}
+	err := json.Unmarshal(timesaleJSONEmpty, got)
+	if err != nil {
+		t.Errorf("Series.UnmarshalJSON error: %s", err)
+	}
+
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("got: %+v want: %+v", got, want)
+	}
+}
+
+func TestTimesales_MarshalJSON_Null(t *testing.T) {
+	buf := &bytes.Buffer{}
+	err := json.Compact(buf, timesaleJSONEmpty)
+	want := buf.Bytes()
+	if err != nil {
+		t.Error(err)
+	}
+
+	got, err := json.Marshal(&timesalesEmpty)
+	if err != nil {
+		t.Errorf("Series.MarshalJSON error: %s", err)
+	}
+
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("got: %s want: %s", got, want)
+	}
+}
